@@ -3,3 +3,31 @@
 @import 'tailwindcss/utilities.css';
 
 @import 'nativewind/theme';
+
+@theme {
+    /* These must match the strings used in useFonts exactly */
+    --font-literata-semibolditalic: literata-semibolditalic;
+    --font-literata-semibold: literata-semibold;
+    --font-literata-regular: literata-regular;
+    --font-literata-mediumitalic: literata-mediumitalic;
+    --font-literata-medium: literata-medium;
+    --font-literata-lightitalic: literata-lightitalic;
+    --font-literata-light: literata-light;
+    --font-literata-italic: literata-italic;
+    --font-literata-extralightitalic: literata-extralightitalic;
+    --font-literata-extralight: literata-extralight;
+    --font-literata-extrabolditalic: literata-extrabolditalic;
+    --font-literata-extrabold: literata-extrabold;
+    --font-literata-bolditalic: literata-bolditalic;
+    --font-literata-bold: literata-bold;
+    --font-literata-blackitalic: literata-blackitalic;
+    --font-literata-black: literata-black;
+    --font-googlesans-semibolditalic: googlesans-semibolditalic;
+    --font-googlesans-semibold: googlesans-semibold;
+    --font-googlesans-regular: googlesans-regular;
+    --font-googlesans-mediumitalic: googlesans-mediumitalic;
+    --font-googlesans-medium: googlesans-medium;
+    --font-googlesans-italic: googlesans-italic;
+    --font-googlesans-bolditalic: googlesans-bolditalic;
+    --font-googlesans-bold: googlesans-bold;
+}

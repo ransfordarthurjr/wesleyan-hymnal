@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1017884881424",
+    "project_id": "wesleyan-hymnal-d75d6",
+    "storage_bucket": "wesleyan-hymnal-d75d6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017884881424:android:4a85111031678cb10c9095",
+        "android_client_info": {
+          "package_name": "tech.hephaestus.wesleyan.hymnal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017884881424-uvgp63360l47t9te2ekebedn7lcqm5au.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXlt3Bkg6gv6oPcX1262fSmk6c-g8f8fw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017884881424-uvgp63360l47t9te2ekebedn7lcqm5au.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1017884881424-bangg7qbun790p6933c2945aosist2d5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "tech.hephaestus.wesleyan.hymnal"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

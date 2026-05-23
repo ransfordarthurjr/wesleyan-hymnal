@@ -39,6 +39,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "789f9c7c-5f2b-45b8-af2f-8b8e438a4ad8"
+      }
+    },
+    "owner": "hephaestus-forge"
   }
 }

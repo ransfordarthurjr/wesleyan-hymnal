@@ -1,6 +1,5 @@
-import { styled } from 'nativewind';
-import * as React from 'react';
 import Svg, { Circle, G, Path, SvgProps } from 'react-native-svg';
+import { styled } from 'nativewind';
 
 const StyledSvg = styled(Svg);
 
@@ -295,6 +294,102 @@ export function NumberIndexSvg({
                 fill="none"
                 stroke-width="1.5"
                 d="M5.25 18a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m6 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m6 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m-12-6a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m6 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m6 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m-12-6a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m6 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m6 0a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0"
+            />
+        </StyledSvg>
+    );
+}
+
+export function UserSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round" // ✅ camelCase
+            className={className}
+            {...props}>
+            <G fill="none" stroke="currentColor" strokeWidth="1.5">
+                <Circle cx="12" cy="6" r="4" />
+                <Path
+                    d="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5Z"
+                    opacity=".5"
+                />
+            </G>
+        </StyledSvg>
+    );
+}
+
+export function SignOutSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round" // ✅ camelCase
+            className={className}
+            {...props}>
+            <G
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinejoin="round">
+                <Path stroke-linejoin="round" d="M10 12h10m0 0l-3-3m3 3l-3 3" />
+                <Path d="M4 12a8 8 0 0 1 8-8m0 16a7.99 7.99 0 0 1-6.245-3" />
+            </G>
+        </StyledSvg>
+    );
+}
+
+export function ProcessingSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <G fill="none">
+                <Path strokeDasharray="18" d="M12 3c4.97 0 9 4.03 9 9"></Path>
+                <Path
+                    strokeDasharray="60"
+                    d="M12 3c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9c0 -4.97 4.03 -9 9 -9Z"
+                    opacity="0.3"></Path>
+            </G>
+        </StyledSvg>
+    );
+}
+
+export function HelpSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="none"
+                d="M12.588 17.002q.228-.23.228-.56q0-.332-.23-.56q-.228-.228-.56-.228t-.56.229t-.227.56q0 .332.228.56q.23.228.561.228t.56-.23M12.002 21q-1.866 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709M12 20q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m.062-12.261q.76 0 1.308.471q.55.471.55 1.179q0 .55-.31.994q-.308.444-.714.819q-.514.466-.905 1.025q-.391.56-.449 1.233q-.019.196.123.328q.14.131.33.131q.201 0 .339-.134q.137-.135.174-.318q.1-.505.402-.899q.301-.393.662-.744q.519-.516.921-1.125q.403-.608.403-1.357q0-1.101-.836-1.818q-.835-.716-1.96-.716q-.834 0-1.553.39q-.718.39-1.149 1.08q-.098.166-.063.343t.19.269q.198.104.4.048t.356-.232q.333-.414.784-.69q.45-.278.997-.278"
             />
         </StyledSvg>
     );

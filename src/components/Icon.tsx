@@ -14,7 +14,7 @@ export function TabIconSvg({ focused, Icon }: TabIconProps) {
     return (
         <View
             className={clsx(
-                'rounded-full items-center justify-center size-13',
+                'flex items-center justify-center rounded-full size-13',
                 focused && 'bg-slate-50',
             )}>
             <Icon

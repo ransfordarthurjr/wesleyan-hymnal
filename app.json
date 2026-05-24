@@ -1,6 +1,6 @@
 {
     "expo": {
-        "name": "wesleyan-hymnal",
+        "name": "Wesleyan Hymnal",
         "slug": "wesleyan-hymnal",
         "version": "1.0.0",
         "orientation": "portrait",
@@ -8,6 +8,7 @@
         "scheme": "wesleyanhymnal",
         "userInterfaceStyle": "automatic",
         "ios": {
+            "deploymentTarget": "16.4",
             "bundleIdentifier": "tech.hephaestus.wesleyan.hymnal",
             "googleServicesFile": "./GoogleService-Info.plist",
             "icon": "./assets/expo.icon"
@@ -32,9 +33,16 @@
             [
                 "expo-splash-screen",
                 {
-                    "backgroundColor": "#208AEF",
+                    "backgroundColor": "#4f46e5",
+                    "image": "./assets/images/splash/splash-note-64x64.png",
+                    "imageWidth": 76,
+                    "resizeMode": "contain",
                     "android": {
-                        "image": "./assets/images/splash-icon.png",
+                        "image": "./assets/images/splash/splash-note-64x64.png",
+                        "imageWidth": 76
+                    },
+                    "ios": {
+                        "image": "./assets/images/splash/splash-note-64x64.png",
                         "imageWidth": 76
                     }
                 }
@@ -76,6 +84,7 @@
                 "expo-build-properties",
                 {
                     "ios": {
+                        "deploymentTarget": "16.4",
                         "useFrameworks": "static",
                         "forceStaticLinking": [
                             "RNFBApp",
@@ -91,7 +100,8 @@
                     }
                 }
             ],
-            "expo-font"
+            "expo-font",
+            "@react-native-google-signin/google-signin"
         ],
         "experiments": {
             "typedRoutes": true,

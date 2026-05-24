@@ -20,3 +20,30 @@ export interface TabItemInterface {
     title: string;
     Icon: IconComponent;
 }
+
+export interface YouVersionBibleDataInterface {
+    id: number;
+    abbreviation: string;
+    promotional_content?: string | null;
+    copyright?: string | null;
+    info?: string | null;
+    publisher_url?: string | null;
+    language_tag: string;
+    localized_abbreviation: string;
+    localized_title: string;
+    title: string;
+    books: string[];
+    youversion_deep_link: string;
+    organization_id?: string | null;
+}
+
+export interface YouVersionVerseOfTheDayInterface {
+    day: number;
+    passage_id: string;
+}
+
+export interface YouVersionPassageInterface {
+    id: string;
+    content: string;
+    reference: string;
+}

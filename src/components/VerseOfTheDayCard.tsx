@@ -1,6 +1,8 @@
 import { View, Text } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 
+import { HOUR } from '@/utils/utility';
+
 import {
     fetchBibleData,
     fetchPassage,
@@ -14,11 +16,12 @@ import {
     DEFAULT_PASSAGE,
     DEFAULT_VOTD,
 } from '@/constants/you-version.constants';
+import { VerseOfTheDayProps } from '@/types/app.types';
 
-const VerseOfTheDayCard = () => {
+const VerseOfTheDayCard = ({ ordinal }: VerseOfTheDayProps) => {
     // 1. Parallel: Fetch Bible Data
     const id: number = DEFAULT_BIBLE_DATA.id;
-    const { data: bible, isLoading: bibleLoading } = useQuery({
+    const { data: bible, isLoading: isBibleLoading } = useQuery({
         queryKey: ['bible', id],
         queryFn: () => fetchBibleData(id),
         placeholderData: DEFAULT_BIBLE_DATA,
@@ -26,10 +29,12 @@ const VerseOfTheDayCard = () => {
     });
 
     // 2. Parallel: Verse of the Day
-    const { data: votd, isLoading: votdLoading } = useQuery({
-        queryKey: ['votd'],
-        queryFn: () => fetchVerseOfTheDay(),
+    const { data: votd, isLoading: isVotdLoading } = useQuery({
+        queryKey: ['votd', ordinal],
+        queryFn: () => fetchVerseOfTheDay(ordinal),
         placeholderData: DEFAULT_VOTD,
+        staleTime: 12 * HOUR,
+        gcTime: 24 * HOUR,
     });
 
     // 3. Dependent: Passage only after VOTD arrives
@@ -45,7 +50,7 @@ const VerseOfTheDayCard = () => {
     });
 
     return (
-        <View className="gap-y-1 rounded-2xl p-4 bg-linear-to-b from-slate-800 to-slate-900">
+        <View className="gap-y-1 rounded-2xl p-4 bg-linear-to-b from-slate-900 via-slate-950 to-slate-950">
             <Text className="font-googlesans-regular text-slate-50">
                 Verse of the day
             </Text>

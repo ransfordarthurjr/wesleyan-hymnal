@@ -11,80 +11,86 @@ import { useAuth } from '@/hooks/useAuth';
 import IconSvg from '@/components/Icon';
 import {
     ArrowBackSvg,
+    DeleteSvg,
+    EditSvg,
     HeartSvg,
     HelpSvg,
     ProcessingSvg,
     SignOutSvg,
+    StarSvg,
     UserSvg,
 } from '@/components/svg/SvgIcons';
 import { useAuthSignOut } from '@/hooks/useAuthSignOut';
 import { PreferencesSvg } from '@/components/svg/SvgTabIcons';
+import ScreenHeading from '@/components/ScreenHeading';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
 const ProfileScreen = () => {
-    const { user } = useAuth();
-    const {
-        signOut,
-        loading: isSignOutLoading,
-        error: isSignOutError,
-    } = useAuthSignOut();
+    const { user, isLoading: isUserLoading } = useAuth();
+    const { signOut, loading: isSignOutLoading } = useAuthSignOut();
 
     useEffect(() => {
-        if (!user) {
-            // router.push('/(auth)/login');
+        if (!isUserLoading && !user) {
+            router.replace('/(auth)/login');
         }
     }, [user]);
-    if (!user) return null;
+
+    const handleSignOut = async () => {
+        await signOut();
+        router.replace('/(auth)/login');
+    };
+
+    if (isUserLoading || !user) return null;
 
     const profileUrl: string | null = user?.photoURL ?? null;
 
     return (
         <SafeAreaView className="flex-1 gap-y-6 p-2 bg-white">
             <View className="flex-row items-center gap-x-2 px-1">
-                <Pressable
-                    onPress={() => {
-                        if (router.canGoBack()) router.back();
-                        else router.push('/(tabs)');
-                    }}
-                    className="shrink-0 flex-row items-center justify-center">
-                    <IconSvg
-                        className="rounded-full items-center justify-center size-8"
-                        iconClassName="size-8 text-indigo-800"
-                        Icon={ArrowBackSvg}
-                    />
-                </Pressable>
-
-                <View className="flex-1 flex-row items-center justify-center">
-                    <Text className="font-googlesans-medium text-2xl text-slate-800 leading-1.3 line-clamp-1">
-                        Profile
-                    </Text>
+                <View className="shrink-0 flex-row items-center justify-center size-8">
+                    <Pressable
+                        onPress={() => {
+                            if (router.canGoBack()) router.back();
+                            else router.push('/(tabs)');
+                        }}
+                        className="shrink-0 flex-row items-center justify-center">
+                        <IconSvg
+                            className="rounded-full items-center justify-center size-8"
+                            iconClassName="size-8 text-indigo-800"
+                            Icon={ArrowBackSvg}
+                        />
+                    </Pressable>
                 </View>
 
-                <Pressable
-                    onPress={() => signOut()}
-                    disabled={isSignOutLoading}
-                    className="shrink-0 flex-row items-center justify-center">
-                    {isSignOutLoading ? (
-                        <IconSvg
-                            className="rounded-full items-center justify-center size-6 animate-spin"
-                            iconClassName="size-6 text-fuchsia-800"
-                            Icon={ProcessingSvg}
-                        />
-                    ) : (
-                        <IconSvg
-                            className="rounded-full items-center justify-center size-6"
-                            iconClassName="size-6 text-fuchsia-800"
-                            Icon={SignOutSvg}
-                        />
-                    )}
-                </Pressable>
+                <ScreenHeading title="Profile" mode="sub" />
+
+                <View className="shrink-0 flex-row items-center justify-center size-8">
+                    <Pressable
+                        onPress={() => handleSignOut()}
+                        disabled={isSignOutLoading}
+                        className="shrink-0 flex-row items-center justify-center">
+                        {isSignOutLoading ? (
+                            <IconSvg
+                                className="rounded-full items-center justify-center size-6 animate-spin"
+                                iconClassName="size-7 text-fuchsia-800"
+                                Icon={ProcessingSvg}
+                            />
+                        ) : (
+                            <IconSvg
+                                className="rounded-full items-center justify-center size-6"
+                                iconClassName="size-6 text-fuchsia-800"
+                                Icon={SignOutSvg}
+                            />
+                        )}
+                    </Pressable>
+                </View>
             </View>
 
-            <View className="flex-1 gap-y-6 px-2">
-                <View className="flex-row items-center border border-indigo-400 rounded-2xl gap-x-4 p-4 bg-indigo-200">
-                    <View className="flex-row items-center justify-center rounded-full p-0.5 size-16 bg-linear-to-br from-indigo-500 via-sky-400 to-fuchsia-500">
-                        <View className="flex-row items-center justify-center rounded-full p-0.5 size-full bg-white/70">
+            <View className="gap-y-6 px-1">
+                <View className="flex-row items-center rounded-2xl gap-x-4 px-4 py-3.5 bg-indigo-50">
+                    <View className="flex-row items-center justify-center rounded-full p-0.5 size-18 bg-linear-to-br from-indigo-600 via-sky-400 to-fuchsia-600">
+                        <View className="flex-row items-center justify-center rounded-full p-0.5 size-full bg-white">
                             {!!profileUrl ? (
                                 <Image
                                     source={{ uri: profileUrl }}
@@ -107,17 +113,29 @@ const ProfileScreen = () => {
                     </View>
 
                     <View>
-                        <Text className="font-googlesans-regular text-xl text-indigo-900">
+                        <Text className="font-googlesans-regular text-xl text-slate-800">
                             {user?.displayName}
                         </Text>
-                        <Text className="font-googlesans-regular text-indigo-900">
+                        <Text className="font-googlesans-regular text-slate-800">
                             {user?.email}
                         </Text>
                     </View>
                 </View>
+            </View>
 
+            <View className="flex-1 gap-y-6 px-2">
                 <View className="gap-y-0.5">
-                    <View className="flex-row items-center rounded-2xl gap-x-3 p-4 bg-slate-600">
+                    <View className="flex-row items-center rounded-md rounded-t-2xl gap-x-4 px-5 py-3.5 bg-indigo-950">
+                        <IconSvg
+                            className="flex items-center justify-center rounded-full size-11 bg-sky-300"
+                            iconClassName="size-7 text-sky-800"
+                            Icon={UserSvg}
+                        />
+                        <Text className="font-googlesans-medium text-lg text-white">
+                            Account Details
+                        </Text>
+                    </View>
+                    <View className="flex-row items-center rounded-md rounded-b-2xl gap-x-4 px-5 py-3.5 bg-indigo-950">
                         <IconSvg
                             className="flex items-center justify-center rounded-full size-11 bg-fuchsia-300"
                             iconClassName="size-7 text-fuchsia-800"
@@ -130,30 +148,40 @@ const ProfileScreen = () => {
                 </View>
 
                 <View className="gap-y-0.5">
-                    <View className="flex-row items-center rounded-t-2xl rounded-md gap-x-3 px-4 py-4 bg-slate-600">
-                        <IconSvg
-                            className="flex items-center justify-center rounded-full size-11 bg-fuchsia-300"
-                            iconClassName="size-7 text-fuchsia-800"
-                            Icon={HeartSvg}
-                        />
-                        <Text className="font-googlesans-medium text-lg text-white">
-                            Favourites
-                        </Text>
-                    </View>
-                    <View className="flex-row items-center rounded-md gap-x-3 px-4 py-4 bg-slate-600">
+                    <View className="flex-row items-center rounded-md rounded-t-2xl gap-x-4 px-5 py-3.5 bg-indigo-950">
                         <IconSvg
                             className="flex items-center justify-center rounded-full size-11 bg-sky-300"
-                            iconClassName="size-8 text-slate-900"
+                            iconClassName="size-7 text-sky-800"
+                            Icon={StarSvg}
+                        />
+                        <Text className="font-googlesans-medium text-lg text-white">
+                            App Rating
+                        </Text>
+                    </View>
+                    <View className="flex-row items-center rounded-md gap-x-4 px-5 py-3.5 bg-indigo-950">
+                        <IconSvg
+                            className="flex items-center justify-center rounded-full size-11 bg-sky-300"
+                            iconClassName="size-8 text-sky-800"
                             Icon={PreferencesSvg}
                         />
                         <Text className="font-googlesans-medium text-lg text-white">
                             Preferences
                         </Text>
                     </View>
-                    <View className="flex-row items-center rounded-b-2xl rounded-t-md gap-x-3 p-4 bg-slate-600">
+                    <View className="flex-row items-center rounded-md gap-x-4 px-5 py-3.5 bg-indigo-950">
+                        <IconSvg
+                            className="flex items-center justify-center rounded-full size-11 bg-teal-300"
+                            iconClassName="size-6 text-teal-800"
+                            Icon={EditSvg}
+                        />
+                        <Text className="font-googlesans-medium text-lg text-white">
+                            Suggest An Edit
+                        </Text>
+                    </View>
+                    <View className="flex-row items-center rounded-md rounded-b-2xl gap-x-4 px-5 py-3.5 bg-indigo-950">
                         <IconSvg
                             className="flex items-center justify-center rounded-full size-11 bg-orange-300"
-                            iconClassName="size-8 text-orange-900"
+                            iconClassName="flex size-8 text-orange-800"
                             Icon={HelpSvg}
                         />
                         <Text className="font-googlesans-medium text-lg text-white">
@@ -161,13 +189,22 @@ const ProfileScreen = () => {
                         </Text>
                     </View>
                 </View>
-
-                <Text className="font-googlesans-semibold text-xl text-indigo-900">
-                    {user?.displayName}
-                </Text>
             </View>
 
-            <View className="shrink-0 h-9"></View>
+            <View className="gap-y-6 px-2">
+                <View className="gap-y-0.5">
+                    <View className="flex-row items-center justify-center border border-rose-200 rounded-2xl gap-x-4 px-5 py-2.5 bg-rose-100">
+                        <Text className="font-googlesans-medium text-lg text-rose-800">
+                            Delete Account
+                        </Text>
+                        <IconSvg
+                            className="flex items-center justify-center rounded-full size-11"
+                            iconClassName="size-9 text-rose-800"
+                            Icon={DeleteSvg}
+                        />
+                    </View>
+                </View>
+            </View>
         </SafeAreaView>
     );
 };

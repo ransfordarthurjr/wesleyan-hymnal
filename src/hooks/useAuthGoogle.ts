@@ -12,11 +12,11 @@ GoogleSignin.configure({
 });
 
 export function useAuthGoogle() {
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
     async function signInWithGoogle() {
-        setLoading(true);
+        setIsLoading(true);
         setError(null);
         try {
             await GoogleSignin.hasPlayServices();
@@ -28,7 +28,7 @@ export function useAuthGoogle() {
             setError(err as Error);
             return null;
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     }
 
@@ -37,5 +37,5 @@ export function useAuthGoogle() {
         await getAuth().signOut();
     }
 
-    return { signInWithGoogle, signOut, loading, error };
+    return { signInWithGoogle, signOut, isLoading, error };
 }

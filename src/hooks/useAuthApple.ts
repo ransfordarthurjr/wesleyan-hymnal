@@ -7,11 +7,11 @@ import {
 import appleAuth from '@invertase/react-native-apple-authentication';
 
 export function useAuthApple() {
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
     async function signInWithApple() {
-        setLoading(true);
+        setIsLoading(true);
         setError(null);
         try {
             const appleAuthRequest = await appleAuth.performRequest({
@@ -37,7 +37,7 @@ export function useAuthApple() {
             setError(err as Error);
             return null;
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     }
 
@@ -46,5 +46,5 @@ export function useAuthApple() {
         // Apple doesn't have an explicit signOut like Google
     }
 
-    return { signInWithApple, signOut, loading, error };
+    return { signInWithApple, signOut, isLoading, error };
 }

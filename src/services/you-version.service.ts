@@ -24,11 +24,11 @@ export async function fetchBibleData(
     return (await response.json()) as YouVersionBibleDataInterface;
 }
 
-export async function fetchVerseOfTheDay(): Promise<YouVersionVerseOfTheDayInterface> {
-    const day: number = DateTime.now().ordinal;
-
+export async function fetchVerseOfTheDay(
+    ordinal: number,
+): Promise<YouVersionVerseOfTheDayInterface> {
     const response = await fetch(
-        `${YOU_VERSION_BASE_URL}/verse_of_the_days/${day}`,
+        `${YOU_VERSION_BASE_URL}/verse_of_the_days/${ordinal}`,
         {
             headers: {
                 'x-yvp-app-key': YOU_VERSION_API_KEY,

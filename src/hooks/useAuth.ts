@@ -7,12 +7,13 @@ import {
 
 export function useAuth() {
     const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
-    const [isAuthInitializing, setAuthInitializing] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const auth = getAuth();
 
         const unsubscribe = onAuthStateChanged(auth, (u) => {
+            /*
             console.log(
                 'onAuthStateChanged',
                 JSON.stringify({
@@ -23,12 +24,13 @@ export function useAuth() {
                     url: u?.photoURL,
                 }),
             );
+            */
 
             setUser(u);
-            if (isAuthInitializing) setAuthInitializing(false);
+            if (isLoading) setIsLoading(false);
         });
         return unsubscribe;
     }, []);
 
-    return { user, isAuthInitializing };
+    return { user, isLoading };
 }

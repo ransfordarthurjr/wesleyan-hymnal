@@ -27,23 +27,25 @@ import IconSvg from '@/components/Icon';
 import { AppleSvg, GoogleSvg } from '@/components/svg/SvgSocialIcons';
 import { BACKGROUND_IMAGES } from '@/constants/auth.constants';
 
+import ScreenHeading from '@/components/ScreenHeading';
+
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 const LoginScreen = () => {
-    const { user, isAuthInitializing } = useAuth();
+    const { user, isLoading: isAuthLoading } = useAuth();
     const {
         signInWithGoogle,
-        loading: googleLoading,
+        isLoading: isGoogleAuthLoading,
         error: googleError,
     } = useAuthGoogle();
     const {
         signInWithApple,
-        loading: appleLoading,
+        isLoading: isAppleAuthLoading,
         error: appleError,
     } = useAuthApple();
 
     useEffect(() => {
         if (user) {
-            router.push('/(tabs)');
+            router.replace('/(tabs)');
         }
     }, [user]);
 
@@ -61,10 +63,12 @@ const LoginScreen = () => {
             blurRadius={blur}>
             <View className="flex-1 bg-transparent">
                 <SafeAreaView className="flex-1 gap-y-16 p-4 bg-white/90">
-                    <View className="flex-row items-center justify-center">
-                        <Text className="font-literata-mediumitalic text-3xl text-indigo-900">
-                            Wesleyan Hymnal
-                        </Text>
+                    <View className="flex-row items-center gap-x-2 px-1">
+                        <View className="shrink-0 flex-row items-center justify-center size-8"></View>
+
+                        <ScreenHeading title="Wesleyan Hymnal" mode="sub" />
+
+                        <View className="shrink-0 flex-row items-center justify-center size-8"></View>
                     </View>
 
                     <View className="gap-y-1">
@@ -84,7 +88,7 @@ const LoginScreen = () => {
                     <View className="flex-1 justify-center gap-y-6 px-2">
                         <Pressable
                             onPress={signInWithGoogle}
-                            disabled={googleLoading}
+                            disabled={isGoogleAuthLoading}
                             className="flex-row items-center justify-center gap-3 border border-indigo-400 rounded-xl py-3 bg-white">
                             <IconSvg
                                 className="items-center justify-center size-8"
@@ -92,7 +96,7 @@ const LoginScreen = () => {
                                 Icon={GoogleSvg}
                             />
                             <Text className="font-googlesans-medium text-base text-slate-900">
-                                {googleLoading
+                                {isGoogleAuthLoading
                                     ? 'Signing in...'
                                     : 'Continue with Google'}
                             </Text>
@@ -114,7 +118,7 @@ const LoginScreen = () => {
 
                                 <Pressable
                                     onPress={signInWithApple}
-                                    disabled={appleLoading}
+                                    disabled={isAppleAuthLoading}
                                     className="flex-row items-center justify-center gap-3 border border-indigo-400 rounded-xl py-3 bg-white">
                                     <IconSvg
                                         className="items-center justify-center size-8"
@@ -122,7 +126,7 @@ const LoginScreen = () => {
                                         Icon={AppleSvg}
                                     />
                                     <Text className="font-googlesans-medium text-base text-slate-900">
-                                        {appleLoading
+                                        {isAppleAuthLoading
                                             ? 'Signing in...'
                                             : 'Continue with Apple'}
                                     </Text>

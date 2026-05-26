@@ -1,6 +1,12 @@
 import clsx, { ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+export const MILLISECONDS: number = 1000;
+export const SECOND: number = MILLISECONDS * 1;
+export const MINUTE: number = SECOND * 60;
+export const HOUR: number = MINUTE * 60;
+export const DAY: number = HOUR * 24;
+
 export function cn(...classes: ClassValue[]) {
     return twMerge(clsx(classes));
 }

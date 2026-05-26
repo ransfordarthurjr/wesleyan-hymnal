@@ -1,5 +1,10 @@
 import { SvgProps } from 'react-native-svg';
 
+export interface ScreenHeadingProps {
+    title: string;
+    mode?: 'sub' | 'main';
+}
+
 export type IconComponent = React.ComponentType<
     SvgProps & { className?: string; focused?: boolean }
 >;
@@ -19,6 +24,10 @@ export interface TabItemInterface {
     name: string;
     title: string;
     Icon: IconComponent;
+}
+
+export interface VerseOfTheDayProps {
+    ordinal: number;
 }
 
 export interface YouVersionBibleDataInterface {
@@ -47,3 +56,13 @@ export interface YouVersionPassageInterface {
     content: string;
     reference: string;
 }
+
+export interface HymnOfTheWeekCardProps {
+    ordinal: number;
+    firstLine: string;
+
+    stanzas: number;
+    author: string;
+}
+
+export type HymnListMode = 'list' | 'grid';

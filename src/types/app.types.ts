@@ -3,6 +3,7 @@ import { SvgProps } from 'react-native-svg';
 export interface ScreenHeadingProps {
     title: string;
     mode?: 'sub' | 'main';
+    themed?: boolean;
 }
 
 export type IconComponent = React.ComponentType<
@@ -59,10 +60,54 @@ export interface YouVersionPassageInterface {
 
 export interface HymnOfTheWeekCardProps {
     ordinal: number;
-    firstLine: string;
-
-    stanzas: number;
-    author: string;
+    scheme?: HymnIndexSchemeType;
 }
 
 export type HymnListMode = 'list' | 'grid';
+
+export interface HymnInterface {
+    ordinal: number;
+    author: string;
+    category: string;
+    preview: string;
+    stanzas: Stanza[];
+    refrain: Refrain;
+    tags: string[];
+}
+
+export interface Stanza {
+    stanza: number;
+    lines: string[];
+}
+
+export interface Refrain {
+    lines: string[];
+}
+
+export interface HymnIndexInterface {
+    ordinal: number;
+    category: string;
+    preview: string;
+    number_of_stanzas: number;
+}
+
+export interface HymnIndexProps {
+    ordinal: number;
+    hymn: HymnIndexInterface;
+
+    first?: boolean;
+    last?: boolean;
+    scheme?: HymnIndexSchemeType;
+}
+
+export type HymnIndexSchemeType =
+    | 'red'
+    | 'orange'
+    | 'green'
+    | 'teal'
+    | 'cyan'
+    | 'blue'
+    | 'violet'
+    | 'fuchsia'
+    | 'rose'
+    | 'slate';

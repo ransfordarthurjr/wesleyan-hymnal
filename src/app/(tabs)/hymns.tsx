@@ -1,10 +1,13 @@
+import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
 import { styled } from 'nativewind';
 
-import { cn } from '@/utils/utility';
+import { HymnIndexInterface, HymnIndexSchemeType } from '@/types/app.types';
+import { cn, generateRandomMathNumber } from '@/utils/utility';
+import { getIndexes } from '@/services/hymns.service';
 
 import IconSvg from '@/components/Icon';
 import { FirstLineSvg, NumberIndexSvg } from '@/components/svg/SvgIcons';
@@ -14,6 +17,34 @@ import HymnOfTheWeekCard from '@/components/HymnOfTheWeekCard';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 const HymnsScreen = () => {
+    const schemes: HymnIndexSchemeType[] = [
+        'slate',
+        'red',
+        'violet',
+        'orange',
+        'green',
+        'fuchsia',
+        'teal',
+        'rose',
+        'cyan',
+        'blue',
+    ];
+
+    const hymnsIndexes: HymnIndexInterface[] = getIndexes();
+
+    const [scheme, setScheme] = useState<HymnIndexSchemeType>(schemes[0]);
+    const [hymnOfTheWeekOrdinal, setHymnOfTheWeekOrdinal] = useState<number>(1);
+
+    useEffect(() => {
+        setScheme(schemes[generateRandomMathNumber(0, schemes.length - 1)]);
+
+        // @Todo get from firebase in aggreated hymns of week
+        setHymnOfTheWeekOrdinal(
+            hymnsIndexes[generateRandomMathNumber(0, hymnsIndexes.length - 1)]
+                .ordinal,
+        );
+    }, [scheme]);
+
     return (
         <SafeAreaView className="flex-1 gap-y-6 p-2 bg-white">
             <View className="flex-row items-center gap-x-2 px-1">
@@ -70,10 +101,8 @@ const HymnsScreen = () => {
                 </View>
 
                 <HymnOfTheWeekCard
-                    ordinal={1}
-                    firstLine="O for a thousand tongues to sing O"
-                    stanzas={8}
-                    author="Charles Wesley"
+                    ordinal={hymnOfTheWeekOrdinal}
+                    scheme={scheme}
                 />
 
                 <View className="flex-1 bg-slate-100">

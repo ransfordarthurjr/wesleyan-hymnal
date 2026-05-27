@@ -6,6 +6,7 @@ import '@/global.css';
 
 import useAppFonts from '@/hooks/useAppFonts';
 import { useAuth } from '@/hooks/useAuth';
+import { init } from '@/services/hymns.service';
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,10 @@ export default function RootLayout() {
 
     useEffect(() => {
         if (isFontsLoaded) SplashScreen.hideAsync();
+
+        (async () => {
+            await init();
+        })();
     }, [isFontsLoaded]);
 
     if (!isFontsLoaded) {

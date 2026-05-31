@@ -9,7 +9,7 @@ import {
     HYMNS_VERSION_KEY,
     HYMNS_COUNT_KEY,
     HYMNS_MY_FAVOURITES_KEY,
-} from '@/constants/hymns.constants';
+} from '@/constants/app.constants';
 
 export const init = async (): Promise<void> => {
     const versionRemote: number = await getHymnVersion();
@@ -63,6 +63,18 @@ export const getHymn = (ordinal: number): HymnInterface | null => {
     return !!hymn && !!hymn.ordinal ? hymn : null;
 };
 
+export const getHymnIndex = (ordinal: number): HymnIndexInterface | null => {
+    const hymn: HymnInterface | null = getHymn(ordinal);
+    if (!hymn) return null;
+
+    return {
+        ordinal: hymn.ordinal,
+        preview: hymn.preview,
+        category: hymn.category,
+        number_of_stanzas: hymn.stanzas?.length || 0,
+    };
+};
+
 export const getFavouriteHymns = (): Set<number> => {
     const favouritesStr = mmkv.getString(HYMNS_MY_FAVOURITES_KEY) || '[]';
     let favouritesArray: number[] = JSON.parse(favouritesStr);
@@ -82,4 +94,12 @@ export const toggleHymnToFavourites = (ordinal: number): Set<number> => {
     const favouritesArray = Array.from(favourites);
     mmkv.set(HYMNS_MY_FAVOURITES_KEY, JSON.stringify(favouritesArray));
     return favourites;
+};
+
+export const getFavouriteHymnsIndexes = (): HymnIndexInterface[] => {
+    const favourites: Set<number> = getFavouriteHymns();
+
+    return Array.from(favourites)
+        .map((fav) => getHymnIndex(fav))
+        .filter((index): index is HymnIndexInterface => index !== null);
 };

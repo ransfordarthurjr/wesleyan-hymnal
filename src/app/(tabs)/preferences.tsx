@@ -1,26 +1,79 @@
-import { View } from 'react-native';
+import { useState } from 'react';
+import { View, Text } from 'react-native';
 import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
+import { Link } from 'expo-router';
+import { Host, Switch } from '@expo/ui';
 
 import { styled } from 'nativewind';
 
-import ScreenHeading from '@/components/ScreenHeading';
+import { APP_HEADING_TAB } from '@/constants/app.constants';
+import { ScreenHeadingProps } from '@/types/app.types';
+
+import { getSchemeById } from '@/utils/utility';
+
+import { ScreenHeading } from '@/components/Headings';
+import {
+    getPreferredStanzaFontSize,
+    setPreferredStanzaFontSize,
+} from '@/services/preferences.service';
+import IconSvg from '@/components/Icon';
+import { FontSizeSvg, HeartSvg } from '@/components/svg/SvgIcons';
+import { LinkCard } from '@/components/LinkCards';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
 const PreferencesScreen = () => {
+    const heading: ScreenHeadingProps = {
+        ...APP_HEADING_TAB,
+        title: 'Preferences',
+    } as ScreenHeadingProps;
+
     return (
         <SafeAreaView className="flex-1 gap-y-6 p-2 bg-white">
             <View className="flex-row items-center gap-x-2 px-1">
-                <View className="shrink-0 flex-row items-center justify-center size-8"></View>
+                {heading.mode === 'sub' && (
+                    <View className="shrink-0 flex-row items-center justify-center size-8"></View>
+                )}
 
-                <ScreenHeading title="Preferences" mode="sub" />
+                <ScreenHeading
+                    title={heading.title}
+                    mode={heading.mode}
+                    size={heading.size}
+                    justify={heading.justify}
+                />
 
-                <View className="shrink-0 flex-row items-center justify-center size-8"></View>
+                <View className="shrink-0 flex-row items-center justify-center size-8" />
             </View>
 
-            <View className="flex-1 gap-y-4"></View>
+            <View className="flex-1 gap-y-6">
+                <View className="gap-y-0.5">
+                    <LinkCard
+                        scheme={getSchemeById('sky').scheme}
+                        pathname="/(preference)/font"
+                        params={{ pref: 'font' }}
+                        Icon={FontSizeSvg}
+                        title="Font"
+                        first={true}
+                    />
 
-            <View className="shrink-0 h-9"></View>
+                    <LinkCard
+                        scheme={getSchemeById('fuchsia').scheme}
+                        pathname="/(preference)/favourites"
+                        params={{ pref: 'font' }}
+                        Icon={HeartSvg}
+                        title="Favourites"
+                        last={true}
+                    />
+
+                    <Host>
+                        <Switch value={true} onValueChange={() => true} />
+                    </Host>
+                </View>
+
+                <View id="font-size" className="shrink-0 gap-y-4 px-3"></View>
+            </View>
+
+            <View className="shrink-0 h-9" />
         </SafeAreaView>
     );
 };

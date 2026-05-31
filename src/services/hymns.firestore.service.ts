@@ -8,7 +8,7 @@ import {
     where,
 } from '@react-native-firebase/firestore';
 
-import { APP_VERSION, DEFAULT_HYMN_VERSION } from '@/constants/hymns.constants';
+import { APP_VERSION, DEFAULT_HYMN_VERSION } from '@/constants/app.constants';
 import { HymnInterface } from '@/types/app.types';
 
 export const getHymnVersion = async (): Promise<number> => {

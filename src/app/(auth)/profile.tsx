@@ -4,6 +4,8 @@ import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-
 import { router } from 'expo-router';
 import { Image } from 'expo-image';
 
+import { APP_HEADING_SUB, APP_HEADING_TAB } from '@/constants/app.constants';
+import { ScreenHeadingProps } from '@/types/app.types';
 import { styled } from 'nativewind';
 
 import { useAuth } from '@/hooks/useAuth';
@@ -22,11 +24,16 @@ import {
 } from '@/components/svg/SvgIcons';
 import { useAuthSignOut } from '@/hooks/useAuthSignOut';
 import { PreferencesSvg } from '@/components/svg/SvgTabIcons';
-import ScreenHeading from '@/components/ScreenHeading';
+import { ScreenHeading } from '@/components/Headings';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
 const ProfileScreen = () => {
+    const heading: ScreenHeadingProps = {
+        ...APP_HEADING_SUB,
+        title: 'Profile',
+    } as ScreenHeadingProps;
+
     const { user, isLoading: isUserLoading } = useAuth();
     const { signOut, loading: isSignOutLoading } = useAuthSignOut();
 
@@ -63,7 +70,12 @@ const ProfileScreen = () => {
                     </Pressable>
                 </View>
 
-                <ScreenHeading title="Profile" mode="sub" />
+                <ScreenHeading
+                    title={heading.title}
+                    mode={heading.mode}
+                    size={heading.size}
+                    justify={heading.justify}
+                />
 
                 <View className="shrink-0 flex-row items-center justify-center size-8">
                     <Pressable

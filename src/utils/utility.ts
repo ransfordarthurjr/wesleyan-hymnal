@@ -1,6 +1,12 @@
 import clsx, { ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+import { SCHEME_OPTIONS } from '@/constants/app.constants';
+import {
+    HymnIndexSchemeType,
+    SchemeMetaDataInterface,
+} from '@/types/app.types';
+
 export const MILLISECONDS: number = 1000;
 export const SECOND: number = MILLISECONDS * 1;
 export const MINUTE: number = SECOND * 60;
@@ -26,4 +32,21 @@ export function generateRandomNumber(min: number, max: number): number {
 
 export function generateRandomMathNumber(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export const SCHEMES = SCHEME_OPTIONS.map((opt) => ({
+    ...opt,
+    scheme: opt.vx,
+}));
+
+export function getSchemes(): SchemeMetaDataInterface[] {
+    return SCHEMES;
+}
+
+export function getSchemeById(vx: string): SchemeMetaDataInterface {
+    return SCHEMES.find((opt) => opt.vx === vx) ?? SCHEMES[0];
+}
+
+export function getSchemeByLabel(label: string): SchemeMetaDataInterface {
+    return SCHEMES.find((opt) => opt.label === label) ?? SCHEMES[0];
 }

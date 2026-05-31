@@ -16,6 +16,8 @@ import { router } from 'expo-router';
 
 import { styled } from 'nativewind';
 
+import { ScreenHeadingProps } from '@/types/app.types';
+import { APP_HEADING_MAIN } from '@/constants/app.constants';
 import { generateRandomMathNumber } from '@/utils/utility';
 
 import { useAuth } from '@/hooks/useAuth';
@@ -27,10 +29,14 @@ import IconSvg from '@/components/Icon';
 import { AppleSvg, GoogleSvg } from '@/components/svg/SvgSocialIcons';
 import { BACKGROUND_IMAGES } from '@/constants/auth.constants';
 
-import ScreenHeading from '@/components/ScreenHeading';
+import { ScreenHeading } from '@/components/Headings';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 const LoginScreen = () => {
+    const heading: ScreenHeadingProps = {
+        ...APP_HEADING_MAIN,
+    } as ScreenHeadingProps;
+
     const { user, isLoading: isAuthLoading } = useAuth();
     const {
         signInWithGoogle,
@@ -66,7 +72,12 @@ const LoginScreen = () => {
                     <View className="flex-row items-center gap-x-2 px-1">
                         <View className="shrink-0 flex-row items-center justify-center size-8"></View>
 
-                        <ScreenHeading title="Wesleyan Hymnal" mode="sub" />
+                        <ScreenHeading
+                            title={heading.title}
+                            mode={heading.mode}
+                            size={heading.size}
+                            justify={heading.justify}
+                        />
 
                         <View className="shrink-0 flex-row items-center justify-center size-8"></View>
                     </View>

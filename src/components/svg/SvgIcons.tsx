@@ -266,7 +266,7 @@ export function ArrowBackSvg({
     );
 }
 
-export function FirstLineSvg({
+export function FirstLineIndexSvg({
     focused = false,
     className,
     ...props
@@ -489,6 +489,76 @@ export function SearchSvg({
             <Path
                 fill="none"
                 d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"
+            />
+        </StyledSvg>
+    );
+}
+
+export function FontSizeSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 1024 1024"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path d="M0 0h1024v1024H0z" fill="none" />
+            <Path
+                fill="currentColor"
+                d="M920 416H616c-4.4 0-8 3.6-8 8v112c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-56h60v320h-46c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h164c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8h-46V480h60v56c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V424c0-4.4-3.6-8-8-8M656 296V168c0-4.4-3.6-8-8-8H104c-4.4 0-8 3.6-8 8v128c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-64h168v560h-92c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h264c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8h-92V232h168v64c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8"
+            />
+        </StyledSvg>
+    );
+}
+
+export function CheckDoubleSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <G fill="none">
+                <Path
+                    fill="currentColor"
+                    d="M4.565 12.407a.75.75 0 1 0-1.13.986zM7.143 16.5l-.565.493a.75.75 0 0 0 1.13 0zm8.422-8.507a.75.75 0 1 0-1.13-.986zm-5.059 3.514a.75.75 0 0 0 1.13.986zm-.834 3.236a.75.75 0 1 0-1.13-.986zm-6.237-1.35l3.143 3.6l1.13-.986l-3.143-3.6zm4.273 3.6l1.964-2.25l-1.13-.986l-1.964 2.25zm3.928-4.5l1.965-2.25l-1.13-.986l-1.965 2.25zm1.965-2.25l1.964-2.25l-1.13-.986l-1.964 2.25z"
+                />
+                <Path d="m20 7.563l-4.286 4.5M11 16l.429.563l2.143-2.25" />
+            </G>
+        </StyledSvg>
+    );
+}
+
+export function CheckSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="m9.55 15.15l8.475-8.475q.3-.3.7-.3t.7.3t.3.713t-.3.712l-9.175 9.2q-.3.3-.7.3t-.7-.3L4.55 13q-.3-.3-.288-.712t.313-.713t.713-.3t.712.3z"
             />
         </StyledSvg>
     );

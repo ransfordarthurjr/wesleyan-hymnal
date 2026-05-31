@@ -8,7 +8,9 @@ import { styled } from 'nativewind';
 import { useAuth } from '@/hooks/useAuth';
 import { useDailyTimestamp } from '@/hooks/useDailyTimestamp';
 
+import { APP_HEADING_MAIN } from '@/constants/app.constants';
 import { cn } from '@/utils/utility';
+import { ScreenHeadingProps } from '@/types/app.types';
 
 import IconSvg from '@/components/Icon';
 import { UserSvg } from '@/components/svg/SvgIcons';
@@ -16,11 +18,15 @@ import { UserSvg } from '@/components/svg/SvgIcons';
 import VerseOfTheDayCard from '@/components/VerseOfTheDayCard';
 import AboutAuthorPreviewCard from '@/components/AboutAuthorPreviewCard';
 
-import ScreenHeading from '@/components/ScreenHeading';
+import { ScreenHeading } from '@/components/Headings';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
 const IndexScreen = () => {
+    const heading: ScreenHeadingProps = {
+        ...APP_HEADING_MAIN,
+    } as ScreenHeadingProps;
+
     const { user } = useAuth();
     const { ordinal, greeting } = useDailyTimestamp();
 
@@ -31,9 +37,16 @@ const IndexScreen = () => {
     return (
         <SafeAreaView className="flex-1 gap-y-6 p-2 bg-white">
             <View className="flex-row items-center gap-x-2 px-1">
-                <View className="shrink-0 flex-row items-center justify-center size-8"></View>
+                {heading.mode === 'sub' && (
+                    <View className="shrink-0 flex-row items-center justify-center size-8"></View>
+                )}
 
-                <ScreenHeading title="Wesleyan Hymnal" mode="main" />
+                <ScreenHeading
+                    title={heading.title}
+                    mode={heading.mode}
+                    size={heading.size}
+                    justify={heading.justify}
+                />
 
                 <View className="shrink-0 flex-row items-center justify-center size-8"></View>
             </View>

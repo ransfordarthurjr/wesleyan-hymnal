@@ -1,11 +1,11 @@
 import { View } from 'react-native';
-import clsx from 'clsx';
 import { IconProps, TabIconProps } from '@/types/app.types';
+import { cn } from '@/utils/utility';
 
 export default function IconSvg({ className, iconClassName, Icon }: IconProps) {
     return (
-        <View className={clsx(className)}>
-            <Icon className={clsx(iconClassName)} />
+        <View className={cn(className)}>
+            <Icon className={cn(iconClassName)} />
         </View>
     );
 }
@@ -13,13 +13,13 @@ export default function IconSvg({ className, iconClassName, Icon }: IconProps) {
 export function TabIconSvg({ focused, Icon }: TabIconProps) {
     return (
         <View
-            className={clsx(
+            className={cn(
                 'flex items-center justify-center rounded-full size-13',
                 focused && 'bg-slate-50',
             )}>
             <Icon
                 focused={focused}
-                className={clsx(
+                className={cn(
                     'size-8 text-indigo-50',
                     focused && 'text-indigo-800',
                 )}

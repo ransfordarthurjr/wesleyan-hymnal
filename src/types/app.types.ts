@@ -2,7 +2,9 @@ import { SvgProps } from 'react-native-svg';
 
 export interface ScreenHeadingProps {
     title: string;
-    mode?: 'sub' | 'main';
+    mode: 'main' | 'tab' | 'sub';
+    size: 'large' | 'medium' | 'regular';
+    justify: 'start' | 'center' | 'end';
     themed?: boolean;
 }
 
@@ -91,15 +93,6 @@ export interface HymnIndexInterface {
     number_of_stanzas: number;
 }
 
-export interface HymnIndexProps {
-    ordinal: number;
-    hymn: HymnIndexInterface;
-
-    first?: boolean;
-    last?: boolean;
-    scheme?: HymnIndexSchemeType;
-}
-
 export type HymnIndexSchemeType =
     | 'red'
     | 'orange'
@@ -110,4 +103,62 @@ export type HymnIndexSchemeType =
     | 'violet'
     | 'fuchsia'
     | 'rose'
+    | 'sky'
     | 'slate';
+
+export type HymnIndexModeType = 'list' | 'grid';
+
+export interface HymnIndexProps {
+    hymn: HymnIndexInterface;
+
+    first?: boolean;
+    last?: boolean;
+    scheme?: HymnIndexSchemeType;
+}
+
+export interface HymnIndexProps {
+    hymn: HymnIndexInterface;
+
+    first?: boolean;
+    last?: boolean;
+    scheme?: HymnIndexSchemeType;
+}
+
+export interface HymnStanzaProps {
+    stanza: Stanza;
+    refrain?: Refrain;
+    scheme?: HymnIndexSchemeType;
+
+    stanzaFontSize?: string;
+    stanzaFontFace?: string;
+}
+
+export interface FontSizeOptionInterface {
+    label: string;
+    fontSize: string;
+    iconSize: string;
+}
+
+export interface FontFaceOptionInterface {
+    label: string;
+    fontFace: string;
+}
+
+export interface LinkCardProps {
+    scheme?: HymnIndexSchemeType;
+
+    pathname: any;
+    params?: Record<string, string>;
+    Icon: IconComponent;
+    title: string;
+
+    first?: boolean;
+    last?: boolean;
+}
+
+export interface SchemeMetaDataInterface {
+    label: string;
+    vx: string;
+
+    scheme: HymnIndexSchemeType;
+}

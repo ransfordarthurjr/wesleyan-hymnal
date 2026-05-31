@@ -15,7 +15,6 @@ export const LinkCard = ({
     first = false,
     last = false,
 }: LinkCardProps) => {
-    console.log('scheme-type', scheme);
     return (
         <Link
             href={{

@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
-import { Host, Switch } from '@expo/ui';
 
 import { styled } from 'nativewind';
 
@@ -12,11 +9,6 @@ import { ScreenHeadingProps } from '@/types/app.types';
 import { getSchemeById } from '@/utils/utility';
 
 import { ScreenHeading } from '@/components/Headings';
-import {
-    getPreferredStanzaFontSize,
-    setPreferredStanzaFontSize,
-} from '@/services/preferences.service';
-import IconSvg from '@/components/Icon';
 import { FontSizeSvg, HeartSvg } from '@/components/svg/SvgIcons';
 import { LinkCard } from '@/components/LinkCards';
 
@@ -64,10 +56,6 @@ const PreferencesScreen = () => {
                         title="Favourites"
                         last={true}
                     />
-
-                    <Host>
-                        <Switch value={true} onValueChange={() => true} />
-                    </Host>
                 </View>
 
                 <View id="font-size" className="shrink-0 gap-y-4 px-3"></View>

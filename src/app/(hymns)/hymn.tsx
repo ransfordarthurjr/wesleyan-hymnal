@@ -3,11 +3,16 @@ import { FlatList, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
 
-import { APP_HEADING_MAIN, APP_HEADING_SUB } from '@/constants/app.constants';
 import {
-    HymnIndexSchemeType,
+    APP_HEADING_MAIN,
+    APP_HEADING_SUB,
+    PREFERENCES_FONT_SIZE_OPTIONS,
+} from '@/constants/app.constants';
+import {
+    SchemeType,
     HymnInterface,
     ScreenHeadingProps,
+    FontSizeOptionInterface,
 } from '@/types/app.types';
 import { cn } from '@/utils/utility';
 
@@ -33,13 +38,16 @@ import {
 import { ScreenHeading } from '@/components/Headings';
 import { HymnStanzaCardV2 } from '@/components/HymnStanzaCard';
 
+const FONT_SIZE_OPTIONS: FontSizeOptionInterface[] =
+    PREFERENCES_FONT_SIZE_OPTIONS as FontSizeOptionInterface[];
+
 const HymnScreen = () => {
     const insets = useSafeAreaInsets();
     const { top, bottom } = insets;
 
     const { number, scheme } = useLocalSearchParams<{
         number: string;
-        scheme: HymnIndexSchemeType;
+        scheme: SchemeType;
     }>();
     const ordinal: number = Number(number) || 1;
 
@@ -89,20 +97,17 @@ const HymnScreen = () => {
         setScrollPercent(Math.min(Math.max(percent, 0), 100));
     };
 
-    const fontSizeOptions = [
-        'text-lg',
-        'text-xl',
-        'text-2xl',
-        'text-3xl',
-        'text-4xl',
-    ];
     const pointerRef = useRef<number>(
-        fontSizeOptions.indexOf(getPreferredStanzaFontSize()),
+        FONT_SIZE_OPTIONS.findIndex(
+            (option) => option.fontSize === getPreferredStanzaFontSize(),
+        )!,
     );
 
     const handleSetPreferredStanzaFontSize = useCallback(() => {
-        pointerRef.current = (pointerRef.current + 1) % fontSizeOptions.length;
-        const next = fontSizeOptions[pointerRef.current];
+        pointerRef.current =
+            (pointerRef.current + 1) % FONT_SIZE_OPTIONS.length;
+        const next = FONT_SIZE_OPTIONS[pointerRef.current].fontSize;
+
         setPreferredStanzaFontSize(next);
         setStanzaFontSize(next); // triggers re-render with new size
     }, []);
@@ -135,6 +140,7 @@ const HymnScreen = () => {
                     scheme === 'violet' && 'bg-violet-500',
                     scheme === 'fuchsia' && 'bg-fuchsia-500',
                     scheme === 'rose' && 'bg-rose-500',
+                    scheme === 'sky' && 'bg-sky-500',
                 )}
                 style={{ paddingTop: top + 8 }}></View>
             <View
@@ -150,6 +156,7 @@ const HymnScreen = () => {
                     scheme === 'violet' && 'bg-violet-500',
                     scheme === 'fuchsia' && 'bg-fuchsia-500',
                     scheme === 'rose' && 'bg-rose-500',
+                    scheme === 'sky' && 'bg-sky-500',
                 )}>
                 <Pressable
                     onPress={() => {
@@ -204,6 +211,7 @@ const HymnScreen = () => {
                             scheme === 'violet' && 'text-violet-900',
                             scheme === 'fuchsia' && 'text-fuchsia-900',
                             scheme === 'rose' && 'text-rose-900',
+                            scheme === 'sky' && 'text-sky-900',
                         )}>
                         Author: {hymn?.author}
                     </Text>
@@ -223,6 +231,7 @@ const HymnScreen = () => {
                             scheme === 'violet' && 'bg-violet-50',
                             scheme === 'fuchsia' && 'bg-fuchsia-50',
                             scheme === 'rose' && 'bg-rose-50',
+                            scheme === 'sky' && 'bg-sky-50',
                         )}>
                         <View
                             id="percentage-scroll"
@@ -238,6 +247,7 @@ const HymnScreen = () => {
                                 scheme === 'violet' && 'bg-violet-900',
                                 scheme === 'fuchsia' && 'bg-fuchsia-900',
                                 scheme === 'rose' && 'bg-rose-900',
+                                scheme === 'sky' && 'bg-sky-900',
                             )}
                             style={{ width: `${scrollPercent}%` }}></View>
                     </View>

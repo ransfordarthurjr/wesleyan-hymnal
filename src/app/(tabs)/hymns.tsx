@@ -11,20 +11,23 @@ import { styled } from 'nativewind';
 import { APP_HEADING_TAB } from '@/constants/app.constants';
 import {
     HymnIndexInterface,
-    HymnIndexSchemeType,
+    SchemeMetaDataInterface,
+    SchemeType,
     ScreenHeadingProps,
 } from '@/types/app.types';
-import { cn, generateRandomMathNumber } from '@/utils/utility';
+import { cn, generateRandomMathNumber, getSchemes } from '@/utils/utility';
 import { getFavouriteHymnsIndexes, getIndexes } from '@/services/hymns.service';
 
 import IconSvg from '@/components/Icon';
 import { FirstLineIndexSvg, NumberIndexSvg } from '@/components/svg/SvgIcons';
 
-import { ScreenHeading } from '@/components/Headings';
+import { ScreenHeading, SectionHeading } from '@/components/Headings';
 import HymnOfTheWeekCard from '@/components/HymnOfTheWeekCard';
 import { HymnIndexFavouriteCard } from '@/components/HymnIndexCards';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
+
+const SCHEMES_META_DATA: SchemeMetaDataInterface[] = getSchemes();
 const HymnsScreen = () => {
     const heading: ScreenHeadingProps = {
         ...APP_HEADING_TAB,
@@ -34,20 +37,11 @@ const HymnsScreen = () => {
     const insets = useSafeAreaInsets();
     const { top, bottom } = insets;
 
-    const schemes: HymnIndexSchemeType[] = [
-        'slate',
-        'red',
-        'violet',
-        'orange',
-        'green',
-        'fuchsia',
-        'teal',
-        'rose',
-        'cyan',
-        'blue',
-    ];
+    const hymnOfTheWeekScheme: SchemeType =
+        SCHEMES_META_DATA[
+            generateRandomMathNumber(0, SCHEMES_META_DATA.length - 1)
+        ].scheme;
 
-    const [scheme, setScheme] = useState<HymnIndexSchemeType>(schemes[0]);
     const [hymnOfTheWeekOrdinal, setHymnOfTheWeekOrdinal] = useState<number>(1);
     const [favouriteIndexes, setFavouriteIndexes] = useState<
         HymnIndexInterface[]
@@ -56,14 +50,12 @@ const HymnsScreen = () => {
     const hymnsIndexes: HymnIndexInterface[] = getIndexes();
 
     useEffect(() => {
-        setScheme(schemes[generateRandomMathNumber(0, schemes.length - 1)]);
-
         // @Todo get from firebase in aggreated hymns of week
         setHymnOfTheWeekOrdinal(
             hymnsIndexes[generateRandomMathNumber(0, hymnsIndexes.length - 1)]
                 .ordinal,
         );
-    }, [scheme]);
+    }, []);
 
     useFocusEffect(
         useCallback(() => {
@@ -135,13 +127,21 @@ const HymnsScreen = () => {
 
                 <HymnOfTheWeekCard
                     ordinal={hymnOfTheWeekOrdinal}
-                    scheme={scheme}
+                    scheme={hymnOfTheWeekScheme}
                 />
 
                 <View className="flex-1 gap-y-2">
-                    <Text className="shrink-0 font-googlesans-semibold text-lg text-indigo-900">
-                        Favourites
-                    </Text>
+                    <View className="flex-row items-center justify-between">
+                        <SectionHeading title="Favourites" />
+
+                        <Link
+                            href={{
+                                pathname: '/(hymns)/hymns-favourites',
+                            }}
+                            asChild>
+                            <SectionHeading title="All Favourites" />
+                        </Link>
+                    </View>
 
                     <View className="flex-1">
                         <FlatList
@@ -153,7 +153,10 @@ const HymnsScreen = () => {
                                     first={index === 0}
                                     last={index === favouriteIndexes.length - 1}
                                     scheme={
-                                        schemes[item.ordinal % schemes.length]
+                                        SCHEMES_META_DATA[
+                                            item.ordinal %
+                                                SCHEMES_META_DATA.length
+                                        ].scheme
                                     }
                                 />
                             )}

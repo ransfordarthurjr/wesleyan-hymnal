@@ -129,3 +129,5 @@ export const _TplWithSafeAreaViewScreen = () => {
         </SafeAreaView>
     );
 };
+
+export default _TplWithSafeAreaViewScreen;

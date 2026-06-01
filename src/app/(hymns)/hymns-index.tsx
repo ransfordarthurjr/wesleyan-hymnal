@@ -10,7 +10,7 @@ import { APP_HEADING_SUB } from '@/constants/app.constants';
 import {
     HymnIndexInterface,
     HymnIndexModeType,
-    HymnIndexSchemeType,
+    SchemeType,
     ScreenHeadingProps,
 } from '@/types/app.types';
 
@@ -40,7 +40,7 @@ const HymnsIndexScreen = () => {
     const insets = useSafeAreaInsets();
     const { top, bottom } = insets;
 
-    const schemes: HymnIndexSchemeType[] = [
+    const schemes: SchemeType[] = [
         'slate',
         'red',
         'violet',

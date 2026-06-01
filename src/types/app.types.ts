@@ -62,7 +62,7 @@ export interface YouVersionPassageInterface {
 
 export interface HymnOfTheWeekCardProps {
     ordinal: number;
-    scheme?: HymnIndexSchemeType;
+    scheme?: SchemeType;
 }
 
 export type HymnListMode = 'list' | 'grid';
@@ -93,7 +93,7 @@ export interface HymnIndexInterface {
     number_of_stanzas: number;
 }
 
-export type HymnIndexSchemeType =
+export type SchemeType =
     | 'red'
     | 'orange'
     | 'green'
@@ -113,7 +113,7 @@ export interface HymnIndexProps {
 
     first?: boolean;
     last?: boolean;
-    scheme?: HymnIndexSchemeType;
+    scheme?: SchemeType;
 }
 
 export interface HymnIndexProps {
@@ -121,13 +121,13 @@ export interface HymnIndexProps {
 
     first?: boolean;
     last?: boolean;
-    scheme?: HymnIndexSchemeType;
+    scheme?: SchemeType;
 }
 
 export interface HymnStanzaProps {
     stanza: Stanza;
     refrain?: Refrain;
-    scheme?: HymnIndexSchemeType;
+    scheme?: SchemeType;
 
     stanzaFontSize?: string;
     stanzaFontFace?: string;
@@ -144,11 +144,16 @@ export interface FontFaceOptionInterface {
     fontFace: string;
 }
 
-export interface LinkCardProps {
-    scheme?: HymnIndexSchemeType;
+export interface SchemeMetaDataInterface {
+    label: string;
+    vx: string;
 
-    pathname: any;
-    params?: Record<string, string>;
+    scheme: SchemeType;
+}
+
+export interface ListCardProps {
+    scheme: SchemeType;
+
     Icon: IconComponent;
     title: string;
 
@@ -156,9 +161,11 @@ export interface LinkCardProps {
     last?: boolean;
 }
 
-export interface SchemeMetaDataInterface {
-    label: string;
-    vx: string;
+export interface LinkCardProps extends ListCardProps {
+    pathname: any;
+    params?: Record<string, string>;
+}
 
-    scheme: HymnIndexSchemeType;
+export interface ActionCardProps extends ListCardProps {
+    action: () => void;
 }

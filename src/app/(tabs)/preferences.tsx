@@ -10,7 +10,7 @@ import { getSchemeById } from '@/utils/utility';
 
 import { ScreenHeading } from '@/components/Headings';
 import { FontSizeSvg, HeartSvg } from '@/components/svg/SvgIcons';
-import { LinkCard } from '@/components/LinkCards';
+import { LinkCard } from '@/components/ListCards';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 

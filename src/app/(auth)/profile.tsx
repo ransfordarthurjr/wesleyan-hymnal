@@ -25,6 +25,7 @@ import {
 import { useAuthSignOut } from '@/hooks/useAuthSignOut';
 import { PreferencesSvg } from '@/components/svg/SvgTabIcons';
 import { ScreenHeading } from '@/components/Headings';
+import { ActionCard, LinkCard } from '@/components/ListCards';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
@@ -147,39 +148,34 @@ const ProfileScreen = () => {
                             Account Details
                         </Text>
                     </View>
-                    <View className="flex-row items-center rounded-md rounded-b-2xl gap-x-4 px-5 py-3.5 bg-indigo-950">
-                        <IconSvg
-                            className="flex items-center justify-center rounded-full size-11 bg-fuchsia-300"
-                            iconClassName="size-7 text-fuchsia-800"
-                            Icon={HeartSvg}
-                        />
-                        <Text className="font-googlesans-medium text-lg text-white">
-                            Favourites
-                        </Text>
-                    </View>
+
+                    <LinkCard
+                        scheme="fuchsia"
+                        pathname="/(hymns)/hymns-favourites"
+                        Icon={HeartSvg}
+                        title="Favourites"
+                        last={true}
+                    />
                 </View>
 
                 <View className="gap-y-0.5">
-                    <View className="flex-row items-center rounded-md rounded-t-2xl gap-x-4 px-5 py-3.5 bg-indigo-950">
-                        <IconSvg
-                            className="flex items-center justify-center rounded-full size-11 bg-sky-300"
-                            iconClassName="size-7 text-sky-800"
-                            Icon={StarSvg}
-                        />
-                        <Text className="font-googlesans-medium text-lg text-white">
-                            App Rating
-                        </Text>
-                    </View>
-                    <View className="flex-row items-center rounded-md gap-x-4 px-5 py-3.5 bg-indigo-950">
-                        <IconSvg
-                            className="flex items-center justify-center rounded-full size-11 bg-sky-300"
-                            iconClassName="size-8 text-sky-800"
-                            Icon={PreferencesSvg}
-                        />
-                        <Text className="font-googlesans-medium text-lg text-white">
-                            Preferences
-                        </Text>
-                    </View>
+                    <ActionCard
+                        scheme="sky"
+                        action={() => {
+                            console.log('action');
+                        }}
+                        Icon={StarSvg}
+                        title="App Rating"
+                        first={true}
+                    />
+
+                    <LinkCard
+                        scheme="sky"
+                        pathname="/(tabs)/preferences"
+                        Icon={PreferencesSvg}
+                        title="Preferences"
+                    />
+
                     <View className="flex-row items-center rounded-md gap-x-4 px-5 py-3.5 bg-indigo-950">
                         <IconSvg
                             className="flex items-center justify-center rounded-full size-11 bg-teal-300"

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { router, useLocalSearchParams } from 'expo-router';
+import { Link, router, useLocalSearchParams } from 'expo-router';
 
 import {
     APP_HEADING_MAIN,
@@ -31,8 +31,11 @@ import {
 import IconSvg from '@/components/Icon';
 import {
     ArrowBackSvg,
+    FontSizeSvg,
     HeartFullSvg,
     HeartSvg,
+    ShareAlt1Svg,
+    ShareSvg,
 } from '@/components/svg/SvgIcons';
 
 import { ScreenHeading } from '@/components/Headings';
@@ -103,7 +106,7 @@ const HymnScreen = () => {
         )!,
     );
 
-    const handleSetPreferredStanzaFontSize = useCallback(() => {
+    const handleRotatePreferredStanzaFontSize = useCallback(() => {
         pointerRef.current =
             (pointerRef.current + 1) % FONT_SIZE_OPTIONS.length;
         const next = FONT_SIZE_OPTIONS[pointerRef.current].fontSize;
@@ -193,31 +196,87 @@ const HymnScreen = () => {
             </View>
 
             <View className="flex-1 gap-y-0 mt-6 px-1">
-                <Pressable
-                    onPress={() => {
-                        handleSetPreferredStanzaFontSize();
-                    }}
-                    className="shrink-0 flex-row items-center px-2 py-1">
-                    <Text
+                <View className="flex-row items-center justify-between px-2">
+                    <Pressable
+                        onPress={() => {
+                            router.push('/(authors)/authors');
+                        }}
                         className={cn(
-                            'font-googlesans-medium text-lg',
-                            scheme === 'slate' && 'text-slate-900',
-                            scheme === 'red' && 'text-red-900',
-                            scheme === 'orange' && 'text-orange-900',
-                            scheme === 'green' && 'text-green-900',
-                            scheme === 'teal' && 'text-teal-900',
-                            scheme === 'cyan' && 'text-cyan-900',
-                            scheme === 'blue' && 'text-blue-900',
-                            scheme === 'violet' && 'text-violet-900',
-                            scheme === 'fuchsia' && 'text-fuchsia-900',
-                            scheme === 'rose' && 'text-rose-900',
-                            scheme === 'sky' && 'text-sky-900',
+                            'shrink-0 flex-row items-center rounded-lg px-4 py-2',
+                            scheme === 'slate' && 'bg-slate-900',
+                            scheme === 'red' && 'bg-red-900',
+                            scheme === 'orange' && 'bg-orange-900',
+                            scheme === 'green' && 'bg-green-900',
+                            scheme === 'teal' && 'bg-teal-900',
+                            scheme === 'cyan' && 'bg-cyan-900',
+                            scheme === 'blue' && 'bg-blue-900',
+                            scheme === 'violet' && 'bg-violet-900',
+                            scheme === 'fuchsia' && 'bg-fuchsia-900',
+                            scheme === 'rose' && 'bg-rose-900',
+                            scheme === 'sky' && 'bg-sky-900',
                         )}>
-                        Author: {hymn?.author}
-                    </Text>
-                </Pressable>
+                        <Text
+                            className={cn(
+                                'font-googlesans-medium text-lg text-white line-clamp-1',
+                            )}>
+                            {hymn?.author}
+                        </Text>
+                    </Pressable>
 
-                <View className="shrink-0">
+                    <View className="shrink-0 flex-row items-center gap-x-6">
+                        <Pressable
+                            onPress={() => {
+                                // @TODO: Share
+                            }}
+                            className="shrink-0 flex-row items-center justify-center">
+                            <IconSvg
+                                className="rounded-full items-center justify-center size-6"
+                                iconClassName={cn(
+                                    'size-6',
+                                    scheme === 'slate' && 'text-slate-900',
+                                    scheme === 'red' && 'text-red-900',
+                                    scheme === 'orange' && 'text-orange-900',
+                                    scheme === 'green' && 'text-green-900',
+                                    scheme === 'teal' && 'text-teal-900',
+                                    scheme === 'cyan' && 'text-cyan-900',
+                                    scheme === 'blue' && 'text-blue-900',
+                                    scheme === 'violet' && 'text-violet-900',
+                                    scheme === 'fuchsia' && 'text-fuchsia-900',
+                                    scheme === 'rose' && 'text-rose-900',
+                                    scheme === 'sky' && 'text-sky-900',
+                                )}
+                                Icon={ShareAlt1Svg}
+                            />
+                        </Pressable>
+
+                        <Pressable
+                            onPress={() => {
+                                handleRotatePreferredStanzaFontSize();
+                            }}
+                            className="shrink-0 flex-row items-center justify-center">
+                            <IconSvg
+                                className="rounded-full items-center justify-center size-6"
+                                iconClassName={cn(
+                                    'size-6',
+                                    scheme === 'slate' && 'text-slate-900',
+                                    scheme === 'red' && 'text-red-900',
+                                    scheme === 'orange' && 'text-orange-900',
+                                    scheme === 'green' && 'text-green-900',
+                                    scheme === 'teal' && 'text-teal-900',
+                                    scheme === 'cyan' && 'text-cyan-900',
+                                    scheme === 'blue' && 'text-blue-900',
+                                    scheme === 'violet' && 'text-violet-900',
+                                    scheme === 'fuchsia' && 'text-fuchsia-900',
+                                    scheme === 'rose' && 'text-rose-900',
+                                    scheme === 'sky' && 'text-sky-900',
+                                )}
+                                Icon={FontSizeSvg}
+                            />
+                        </Pressable>
+                    </View>
+                </View>
+
+                <View className="shrink-0 mt-1 px-2">
                     <View
                         className={cn(
                             'flex flex-row items-center rounded-full h-1 w-full',

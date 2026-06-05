@@ -23,6 +23,7 @@ import {
 import {
     FontFaceOptionInterface,
     FontSizeOptionInterface,
+    IconComponent,
     ScreenHeadingProps,
 } from '@/types/app.types';
 import { cn } from '@/utils/utility';
@@ -42,6 +43,12 @@ import {
     CheckDoubleSvg,
     CheckSvg,
     FontSizeSvg,
+    SizeLSvg,
+    SizeMSvg,
+    SizeSSvg,
+    SizeXLSvg,
+    SizeXSSvg,
+    SizeXXLSvg,
 } from '@/components/svg/SvgIcons';
 import { ScreenHeading, SectionHeading } from '@/components/Headings';
 
@@ -52,6 +59,14 @@ const FONT_SIZE_OPTIONS: FontSizeOptionInterface[] =
     PREFERENCES_FONT_SIZE_OPTIONS as FontSizeOptionInterface[];
 const FONT_FACE_OPTIONS: FontFaceOptionInterface[] =
     PREFERENCES_FONT_FACE_OPTIONS as FontFaceOptionInterface[];
+
+const ICONS_SIZE_MAPPINGS: Record<string, IconComponent> = {
+    XL: SizeXXLSvg,
+    L: SizeXLSvg,
+    R: SizeLSvg,
+    S: SizeMSvg,
+    XS: SizeSSvg,
+};
 
 const FontPreferenceScreen = () => {
     const heading: ScreenHeadingProps = {
@@ -80,7 +95,7 @@ const FontPreferenceScreen = () => {
     };
 
     return (
-        <SafeAreaView className="flex-1 gap-y-4 p-6 bg-white">
+        <SafeAreaView className="flex-1 gap-y-4 p-2 bg-white">
             <View className="flex-row items-center gap-x-2 px-1">
                 {heading.mode === 'sub' && (
                     <Pressable
@@ -107,12 +122,12 @@ const FontPreferenceScreen = () => {
                 <View className="shrink-0 flex-row items-center justify-center size-8"></View>
             </View>
 
-            <View className="flex-1 gap-y-4">
+            <View className="flex-1 gap-y-4 px-2">
                 {/* font size */}
                 <View className="">
                     <SectionHeading title="Font Size" />
 
-                    <View className="flex-row items-center gap-x-0.5 px-2 py-1 w-full">
+                    <View className="flex-row items-center gap-x-0.5 border border-slate-200 rounded-2xl p-0.5 w-full bg-slate-50">
                         {FONT_SIZE_OPTIONS.map((option, index) => (
                             <Pressable
                                 key={index}
@@ -120,20 +135,20 @@ const FontPreferenceScreen = () => {
                                     handleSelectFontSize(option.fontSize)
                                 }
                                 className={cn(
-                                    'flex-1 flex-row items-center justify-center border border-indigo-200 rounded-lg py-1 bg-indigo-50',
-                                    index === 0 && 'rounded-l-2xl',
+                                    'flex-1 flex-row items-center justify-center  rounded-sm py-1 bg-slate-50',
+                                    index === 0 && 'rounded-l-xl',
                                     index === FONT_SIZE_OPTIONS.length - 1 &&
-                                        'rounded-r-2xl',
+                                        'rounded-r-xl',
                                     fontSize === option.fontSize &&
-                                        'bg-indigo-200',
+                                        'border border-slate-300 bg-slate-200',
                                 )}>
                                 <IconSvg
                                     className="flex-row flex items-center justify-center size-12"
                                     iconClassName={cn(
-                                        'text-indigo-950',
+                                        'text-slate-950',
                                         option.iconSize,
                                     )}
-                                    Icon={FontSizeSvg}
+                                    Icon={ICONS_SIZE_MAPPINGS[option.label]}
                                 />
                             </Pressable>
                         ))}
@@ -152,19 +167,23 @@ const FontPreferenceScreen = () => {
                                     handleSelectFontFace(option.fontFace)
                                 }
                                 className="flex-row items-center gap-x-2 w-full">
-                                <View className="flex items-center justify-center size-10">
+                                <View className="flex items-center justify-center w-6">
                                     {fontFace === option.fontFace && (
                                         <IconSvg
-                                            className="flex items-center justify-center size-10"
-                                            iconClassName="text-teal-700 size-6"
+                                            className="flex items-center justify-center size-6"
+                                            iconClassName="text-indigo-950 size-6"
                                             Icon={CheckSvg}
                                         />
                                     )}
                                 </View>
                                 <Text
                                     className={cn(
-                                        'text-xl text-indigo-950',
+                                        'flex-1 text-xl text-slate-600',
                                         option.fontFace,
+                                        {
+                                            'text-slate-950':
+                                                fontFace === option.fontFace,
+                                        },
                                     )}>
                                     {option.label}
                                 </Text>
@@ -174,26 +193,30 @@ const FontPreferenceScreen = () => {
                 </View>
 
                 {/* preview */}
-                <View className="gap-y-2 rounded-2xl p-4 bg-slate-100">
-                    <SectionHeading title="Preview" />
-
-                    <Text
-                        className={cn(
-                            'text-indigo-950 line-clamp-4',
-                            fontFace,
-                            fontSize,
-                        )}>
-                        Go therefore and make disciples of all the nations,
-                        baptizing them in the name of the Father and of the Son
-                        and of the Holy Spirit, 20 teaching them to observe all
-                        things that I have commanded you; and lo, I am with you
-                        always, even to the end of the age.” Amen.
-                    </Text>
-
-                    <View className="flex-row justify-end">
-                        <Text className="text-base text-indigo-950">
-                            Mat. 28: 19 - 20
+                <View className="gap-y-0.5">
+                    <View className="rounded-md rounded-t-2xl p-4 bg-slate-200">
+                        <SectionHeading title="Preview" />
+                    </View>
+                    <View className="gap-y-2 rounded-md rounded-b-2xl p-4 bg-slate-200">
+                        <Text
+                            className={cn(
+                                'text-slate-950 line-clamp-4 mt-2',
+                                fontFace,
+                                fontSize,
+                            )}>
+                            Go therefore and make disciples of all the nations,
+                            baptizing them in the name of the Father and of the
+                            Son and of the Holy Spirit, 20 teaching them to
+                            observe all things that I have commanded you; and
+                            lo, I am with you always, even to the end of the
+                            age.” Amen.
                         </Text>
+
+                        <View className="flex-row justify-end">
+                            <Text className="text-base text-slate-950">
+                                Mat. 28: 19 - 20
+                            </Text>
+                        </View>
                     </View>
                 </View>
             </View>

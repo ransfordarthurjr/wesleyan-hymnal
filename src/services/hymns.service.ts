@@ -8,8 +8,16 @@ import {
     HYMN_PREFIX_KEY,
     HYMNS_VERSION_KEY,
     HYMNS_COUNT_KEY,
-    HYMNS_MY_FAVOURITES_KEY,
+    HYMNS_FAVOURITES_KEY,
+    HYMNS_FAVOURITES_ORDER_KEY,
+    HYMNS_FAVOURITES_ORDER_OPTIONS,
 } from '@/constants/app.constants';
+
+import {
+    SortAscendingSvg,
+    SortDescendingSvg,
+    SortUnOrderedSvg,
+} from '@/components/svg/SvgIcons';
 
 export const init = async (): Promise<void> => {
     const versionRemote: number = await getHymnVersion();
@@ -75,24 +83,57 @@ export const getHymnIndex = (ordinal: number): HymnIndexInterface | null => {
     };
 };
 
+export const getFavouriteHymnsOrder = (): string => {
+    const favouritesOrder =
+        mmkv.getString(HYMNS_FAVOURITES_ORDER_KEY) ||
+        HYMNS_FAVOURITES_ORDER_OPTIONS[0].value;
+
+    mmkv.set(HYMNS_FAVOURITES_ORDER_KEY, favouritesOrder);
+    return favouritesOrder;
+};
+
+export const setFavouriteHymnsOrder = (order: string): string => {
+    const validOrder = (
+        HYMNS_FAVOURITES_ORDER_OPTIONS.find((opt) => opt.value === order) ||
+        HYMNS_FAVOURITES_ORDER_OPTIONS[0]
+    ).value;
+
+    mmkv.set(HYMNS_FAVOURITES_ORDER_KEY, validOrder);
+    return getFavouriteHymnsOrder();
+};
+
 export const getFavouriteHymns = (): Set<number> => {
-    const favouritesStr = mmkv.getString(HYMNS_MY_FAVOURITES_KEY) || '[]';
+    const favouritesStr = mmkv.getString(HYMNS_FAVOURITES_KEY) || '[]';
     let favouritesArray: number[] = JSON.parse(favouritesStr);
 
-    return new Set<number>(favouritesArray);
+    const favouritesOrder = getFavouriteHymnsOrder();
+    switch (favouritesOrder) {
+        case HYMNS_FAVOURITES_ORDER_OPTIONS[0].value:
+            return new Set<number>(favouritesArray);
+
+        case 'ascending':
+            return new Set<number>(favouritesArray.sort((a, b) => a - b));
+
+        case 'descending':
+            return new Set<number>(favouritesArray.sort((a, b) => b - a));
+
+        default:
+            return new Set<number>(favouritesArray);
+    }
 };
 
 export const toggleHymnToFavourites = (ordinal: number): Set<number> => {
-    const favourites: Set<number> = getFavouriteHymns();
+    let favourites: Set<number> = getFavouriteHymns();
 
     if (favourites.has(ordinal)) {
         favourites.delete(ordinal);
     } else {
-        favourites.add(ordinal);
+        const updatedFavourites = new Set([ordinal, ...favourites]);
+        favourites = updatedFavourites;
     }
 
     const favouritesArray = Array.from(favourites);
-    mmkv.set(HYMNS_MY_FAVOURITES_KEY, JSON.stringify(favouritesArray));
+    mmkv.set(HYMNS_FAVOURITES_KEY, JSON.stringify(favouritesArray));
     return favourites;
 };
 
@@ -102,4 +143,24 @@ export const getFavouriteHymnsIndexes = (): HymnIndexInterface[] => {
     return Array.from(favourites)
         .map((fav) => getHymnIndex(fav))
         .filter((index): index is HymnIndexInterface => index !== null);
+};
+
+export const removeHymnFromFavourites = (ordinal: number): Set<number> => {
+    const favourites: Set<number> = getFavouriteHymns();
+    favourites.delete(ordinal);
+
+    const favouritesArray = Array.from(favourites);
+    mmkv.set(HYMNS_FAVOURITES_KEY, JSON.stringify(favouritesArray));
+    return favourites;
+};
+
+export const getOrderingIcon = (currentOrder: string) => {
+    switch (currentOrder) {
+        case 'ascending':
+            return SortAscendingSvg;
+        case 'descending':
+            return SortDescendingSvg;
+        default:
+            return SortUnOrderedSvg;
+    }
 };

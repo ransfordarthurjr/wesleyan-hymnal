@@ -8,7 +8,25 @@ export const HYMNS_KEY: string = 'hymns';
 export const HYMNS_COUNT_KEY: string = 'hymns-count';
 export const HYMN_PREFIX_KEY: string = 'hymn-';
 
-export const HYMNS_MY_FAVOURITES_KEY: string = 'hymns-my-favourites';
+export const HYMNS_FAVOURITES_KEY: string = 'hymns-my-favourites';
+export const HYMNS_FAVOURITES_ORDER_OPTIONS = [
+    {
+        label: 'Preserve',
+        value: 'preserve',
+        description: 'Preserve the order of your favourites',
+    },
+    {
+        label: 'Ascending',
+        value: 'ascending',
+        description: 'Order favourites by ascending order',
+    },
+    {
+        label: 'Descending',
+        value: 'descending',
+        description: 'Order favourites by descending order',
+    },
+];
+export const HYMNS_FAVOURITES_ORDER_KEY: string = 'hymns-my-favourites-order';
 
 export const DEFAULT_HYMNS_PREFERENCES_KEY_STANZA_FONT_SIZE: string =
     'text-2xl';
@@ -42,11 +60,11 @@ export const APP_HEADING_SUB = {
 };
 
 export const PREFERENCES_FONT_SIZE_OPTIONS = [
-    { label: 'XL', fontSize: 'text-4xl', iconSize: 'size-12' },
-    { label: 'L', fontSize: 'text-3xl', iconSize: 'size-10' },
+    { label: 'XL', fontSize: 'text-4xl', iconSize: 'size-8' },
+    { label: 'L', fontSize: 'text-3xl', iconSize: 'size-8' },
     { label: 'R', fontSize: 'text-2xl', iconSize: 'size-8' },
-    { label: 'S', fontSize: 'text-xl', iconSize: 'size-6' },
-    { label: 'XS', fontSize: 'text-lg', iconSize: 'size-4' },
+    { label: 'S', fontSize: 'text-xl', iconSize: 'size-8' },
+    { label: 'XS', fontSize: 'text-lg', iconSize: 'size-8' },
 ];
 
 export const PREFERENCES_FONT_FACE_OPTIONS = [

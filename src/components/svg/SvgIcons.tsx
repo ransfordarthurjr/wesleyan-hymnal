@@ -563,3 +563,247 @@ export function CheckSvg({
         </StyledSvg>
     );
 }
+
+export function SortAscendingSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 16 16"
+            stroke="currentColor"
+            strokeWidth="0.1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M3.5 13.5a.5.5 0 0 1-1 0V4.707L1.354 5.854a.5.5 0 1 1-.708-.708l2-1.999l.007-.007a.5.5 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L3.5 4.707zm4-9.5a.5.5 0 0 1 0-1h1a.5.5 0 0 1 0 1zm0 3a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1zm0 3a.5.5 0 0 1 0-1h5a.5.5 0 0 1 0 1zM7 12.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5"
+            />
+        </StyledSvg>
+    );
+}
+
+export function SortDescendingSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 16 16"
+            stroke="currentColor"
+            strokeWidth="0.1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999l.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"
+            />
+        </StyledSvg>
+    );
+}
+
+export function SortUnOrderedSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 25"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M7 12a2 2 0 1 1-4 0a2 2 0 0 1 4 0m14 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0"
+            />
+            <Path
+                fill="currentColor"
+                d="M14 12a2 2 0 1 1-4 0a2 2 0 0 1 4 0"
+                opacity=".5"
+            />
+        </StyledSvg>
+    );
+}
+
+export function SizeXXSSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M9 7h2l1 2.5L13 7h2l-2 5l2 5h-2l-1-2.5l-1 2.5H9l2-5zm9 0h4v2h-4v2h2a2 2 0 0 1 2 2v2c0 1.11-.89 2-2 2h-4v-2h4v-2h-2a2 2 0 0 1-2-2V9c0-1.1.9-2 2-2M2 7h2l1 2.5L6 7h2l-2 5l2 5H6l-1-2.5L4 17H2l2-5z"
+            />
+        </StyledSvg>
+    );
+}
+
+export function SizeXSSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M6 7h2l1 2.5L10 7h2l-2 5l2 5h-2l-1-2.5L8 17H6l2-5zm9 0h4v2h-4v2h2a2 2 0 0 1 2 2v2c0 1.11-.89 2-2 2h-4v-2h4v-2h-2a2 2 0 0 1-2-2V9c0-1.1.9-2 2-2"
+            />
+        </StyledSvg>
+    );
+}
+
+export function SizeSSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M11 7c-1.1 0-2 .9-2 2v2a2 2 0 0 0 2 2h2v2H9v2h4c1.11 0 2-.89 2-2v-2a2 2 0 0 0-2-2h-2V9h4V7z"
+            />
+        </StyledSvg>
+    );
+}
+
+export function SizeMSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M9 7c-1.1 0-2 .9-2 2v8h2V9h2v7h2V9h2v8h2V9a2 2 0 0 0-2-2z"
+            />
+        </StyledSvg>
+    );
+}
+
+export function SizeLSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path fill="currentColor" d="M9 7v10h6v-2h-4V7z" />
+        </StyledSvg>
+    );
+}
+
+export function SizeXLSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M6 7h2l1 2.5L10 7h2l-2 5l2 5h-2l-1-2.5L8 17H6l2-5zm7 0h2v8h4v2h-6z"
+            />
+        </StyledSvg>
+    );
+}
+
+export function SizeXXLSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M9 7h2l1 2.5L13 7h2l-2 5l2 5h-2l-1-2.5l-1 2.5H9l2-5zm7 0h2v8h4v2h-6zM2 7h2l1 2.5L6 7h2l-2 5l2 5H6l-1-2.5L4 17H2l2-5z"
+            />
+        </StyledSvg>
+    );
+}
+
+export function Size3XLSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.0"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M9 7h2l1 2.5L13 7h2l-2 5l2 5h-2l-1-2.5l-1 2.5H9l2-5zm7 0h2v8h4v2h-6zm-8 8c0 1.11-.89 2-2 2H2v-2h4v-2H4v-2h2V9H2V7h4a2 2 0 0 1 2 2v1.5c0 .83-.67 1.5-1.5 1.5c.83 0 1.5.67 1.5 1.5z"
+            />
+        </StyledSvg>
+    );
+}

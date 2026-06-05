@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SplashScreen, Stack } from 'expo-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -32,7 +33,9 @@ export default function RootLayout() {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <RootLayoutNav />
+            <GestureHandlerRootView>
+                <RootLayoutNav />
+            </GestureHandlerRootView>
         </QueryClientProvider>
     );
 }

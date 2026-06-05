@@ -1,62 +1,47 @@
 /* react, react-native, expo */
-import { useCallback, useState } from 'react';
+import { useRef } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
-import {
-    SafeAreaView as ReactNativeSafeAreaView,
-    useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ReanimatedSwipeable, {
+    SwipeableMethods,
+} from 'react-native-gesture-handler/ReanimatedSwipeable';
+import Animated, {
+    interpolate,
+    SharedValue,
+    useAnimatedStyle,
+} from 'react-native-reanimated';
 
-import { router, useFocusEffect } from 'expo-router';
-
-/* nativewind */
-import { styled } from 'nativewind';
-
-/* 3rd party libs */
+import { router } from 'expo-router';
 
 /* constants & utilities */
-import { APP_HEADING_SUB, APP_HEADING_TAB } from '@/constants/app.constants';
+import { APP_HEADING_SUB } from '@/constants/app.constants';
 import {
     HymnIndexInterface,
     SchemeMetaDataInterface,
     ScreenHeadingProps,
 } from '@/types/app.types';
-import { cn, getSchemes } from '@/utils/utility';
+import { getSchemes } from '@/utils/utility';
 
 /* custom defined hooks */
-
-/* services */
-import { getFavouriteHymnsIndexes } from '@/services/hymns.service';
+import { useHymnsFavourites } from '@/hooks/useHymnsFavourites';
 
 /* components */
 import IconSvg from '@/components/Icon';
-import { ArrowBackSvg } from '@/components/svg/SvgIcons';
+import { ArrowBackSvg, DeleteSvg, HeartSvg } from '@/components/svg/SvgIcons';
 import { ScreenHeading } from '@/components/Headings';
-import {
-    HymnFavouriteCard,
-    HymnIndexFavouriteCard,
-} from '@/components/HymnIndexCards';
-
-/* Styled RNs */
+import { HymnFavouriteCard } from '@/components/HymnIndexCards';
 
 const SCHEMES_META_DATA: SchemeMetaDataInterface[] = getSchemes();
+
 export const HymnsFavouritesScreen = () => {
     const heading: ScreenHeadingProps = {
         ...APP_HEADING_SUB,
         title: 'Favourites',
     } as ScreenHeadingProps;
 
-    const insets = useSafeAreaInsets();
-    const { top, bottom } = insets;
+    const { top, bottom } = useSafeAreaInsets();
 
-    const [favouriteIndexes, setFavouriteIndexes] = useState<
-        HymnIndexInterface[]
-    >([]);
-
-    useFocusEffect(
-        useCallback(() => {
-            setFavouriteIndexes(getFavouriteHymnsIndexes());
-        }, []),
-    );
+    const { favouriteIndexes, remove } = useHymnsFavourites();
 
     return (
         <View
@@ -85,35 +70,29 @@ export const HymnsFavouritesScreen = () => {
                     justify={heading.justify}
                 />
 
-                <View className="shrink-0 flex-row items-center justify-center size-8"></View>
+                <View className="shrink-0 flex-row items-center justify-center size-8" />
             </View>
 
-            <View className="flex-1 gap-y-4">
-                <View className="flex-1">
+            <View className="flex-1">
+                {favouriteIndexes.length === 0 ? (
+                    <FavouritesEmptyState />
+                ) : (
                     <FlatList
                         data={favouriteIndexes}
                         keyExtractor={(item) => item.ordinal.toString()}
                         renderItem={({ item, index }) => (
-                            <HymnFavouriteCard
-                                hymn={item}
-                                first={index === 0}
-                                last={index === favouriteIndexes.length - 1}
-                                scheme={
-                                    SCHEMES_META_DATA[
-                                        item.ordinal % SCHEMES_META_DATA.length
-                                    ].scheme
-                                }
+                            <SwipeableHymnRow
+                                item={item}
+                                index={index}
+                                total={favouriteIndexes.length}
+                                onDelete={remove}
                             />
                         )}
-                        ItemSeparatorComponent={() => (
-                            <View className="h-1"></View>
-                        )}
+                        ItemSeparatorComponent={() => <View className="h-1" />}
                         showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{
-                            paddingBottom: bottom + 24,
-                        }}
+                        contentContainerStyle={{ paddingBottom: bottom + 24 }}
                     />
-                </View>
+                )}
             </View>
 
             <View className="shrink-0 h-9" />
@@ -121,4 +100,106 @@ export const HymnsFavouritesScreen = () => {
     );
 };
 
+const DeleteAction = ({
+    dragX,
+    onDelete,
+}: {
+    dragX: SharedValue<number>;
+    onDelete: () => void;
+}) => {
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [
+            {
+                scale: interpolate(
+                    dragX.value,
+                    [-80, -40, 0],
+                    [1, 0.9, 0.7],
+                    'clamp',
+                ),
+            },
+        ],
+        opacity: interpolate(dragX.value, [-60, -20], [1, 0], 'clamp'),
+    }));
+
+    return (
+        <Pressable
+            onPress={onDelete}
+            className="items-center justify-center w-20 bg-transparent">
+            <Animated.View style={animatedStyle}>
+                <IconSvg
+                    className="items-center justify-center size-10"
+                    iconClassName="size-8 text-rose-900"
+                    Icon={DeleteSvg}
+                />
+            </Animated.View>
+        </Pressable>
+    );
+};
+
+const SwipeableHymnRow = ({
+    item,
+    index,
+    total,
+    onDelete,
+}: {
+    item: HymnIndexInterface;
+    index: number;
+    total: number;
+    onDelete: (ordinal: number) => void;
+}) => {
+    const swipeableRef = useRef<SwipeableMethods>(null);
+
+    const renderRightActions = (
+        _progress: SharedValue<number>,
+        dragX: SharedValue<number>,
+    ) => (
+        <DeleteAction
+            dragX={dragX}
+            onDelete={() => {
+                swipeableRef.current?.close();
+                onDelete(item.ordinal);
+            }}
+        />
+    );
+
+    return (
+        <ReanimatedSwipeable
+            ref={swipeableRef}
+            renderRightActions={renderRightActions}
+            rightThreshold={40}
+            overshootRight={false}
+            friction={2}>
+            <HymnFavouriteCard
+                hymn={item}
+                first={index === 0}
+                last={index === total - 1}
+                scheme={
+                    SCHEMES_META_DATA[item.ordinal % SCHEMES_META_DATA.length]
+                        .scheme
+                }
+            />
+        </ReanimatedSwipeable>
+    );
+};
+
 export default HymnsFavouritesScreen;
+
+export const FavouritesEmptyState = () => (
+    <View className="flex-1 items-center justify-center gap-y-4">
+        <View className="items-center justify-center size-16 rounded-full bg-rose-50">
+            <IconSvg
+                className="items-center justify-center size-12"
+                iconClassName="size-10 text-rose-200"
+                Icon={HeartSvg}
+            />
+        </View>
+        <View className="items-center gap-y-1">
+            <Text className="font-googlesans-medium text-base text-slate-950">
+                No favourites yet
+            </Text>
+            <Text className="font-googlesans-regular text-sm text-slate-400 text-center px-8">
+                Hymns you favourite will appear here
+            </Text>
+        </View>
+    </View>
+);

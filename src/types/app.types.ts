@@ -151,21 +151,46 @@ export interface SchemeMetaDataInterface {
     scheme: SchemeType;
 }
 
+export type ListCardVariantsType = 'solid' | 'outline';
+
 export interface ListCardProps {
-    scheme: SchemeType;
+    scheme?: SchemeType;
+    variant?: ListCardVariantsType;
+
+    title: string;
+    mode: ListCardMode;
 
     Icon: IconComponent;
-    title: string;
 
     first?: boolean;
     last?: boolean;
 }
 
-export interface LinkCardProps extends ListCardProps {
+export interface ListCardLink {
     pathname: any;
     params?: Record<string, string>;
 }
 
-export interface ActionCardProps extends ListCardProps {
+export interface ListCardAction {
     action: () => void;
+}
+
+export type ListCardMode =
+    | { mode: 'link'; link: ListCardLink }
+    | { mode: 'action'; action: ListCardAction };
+
+export interface HymnsFavouritesOrderOptionInterface {
+    label: string;
+    value: string;
+    description?: string;
+}
+
+export interface UseHymnsFavouritesReturn {
+    favouriteIndexes: HymnIndexInterface[];
+    order: string;
+    toggle: (ordinal: number) => void;
+    remove: (ordinal: number) => void;
+    setOrder: (order: string) => void;
+    isFavourite: (ordinal: number) => boolean;
+    refresh: () => void;
 }

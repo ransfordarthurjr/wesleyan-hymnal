@@ -11,6 +11,7 @@ import { getSchemeById } from '@/utils/utility';
 import { ScreenHeading } from '@/components/Headings';
 import { FontSizeSvg, HeartSvg, SignOutSvg } from '@/components/svg/SvgIcons';
 import { ListCard } from '@/components/ListCards';
+import SwitchControl from '@/components/Swtich';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
@@ -70,6 +71,11 @@ const PreferencesScreen = () => {
                             />
                         );
                     })}
+                </View>
+
+                <View className="gap-y-0.5">
+                    <SwitchControl toogle={false} />
+                    <SwitchControl toogle={true} />
                 </View>
 
                 <View id="font-size" className="shrink-0 gap-y-4 px-3"></View>

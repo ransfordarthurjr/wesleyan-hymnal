@@ -564,6 +564,25 @@ export function CheckSvg({
     );
 }
 
+export function XSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 25"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path fill="none" d="M20 20L4 4m16 0L4 20" />
+        </StyledSvg>
+    );
+}
+
 export function SortAscendingSvg({
     focused = false,
     className,

@@ -20,7 +20,7 @@ import { getIndexes } from '@/services/hymns.service';
 import IconSvg from '@/components/Icon';
 import {
     ArrowBackSvg,
-    FirstLineIndexSvg,
+    LinesIndexSvg,
     NumberIndexSvg,
     SearchSvg,
 } from '@/components/svg/SvgIcons';
@@ -194,7 +194,7 @@ const HymnsIndexScreen = () => {
                             <IconSvg
                                 className="rounded-full items-center justify-center size-8"
                                 iconClassName="size-8 text-slate-800"
-                                Icon={FirstLineIndexSvg}
+                                Icon={LinesIndexSvg}
                             />
                         )}
                     </Pressable>

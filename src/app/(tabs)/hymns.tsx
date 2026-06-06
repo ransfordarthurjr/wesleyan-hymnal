@@ -24,7 +24,7 @@ import { getIndexes, getOrderingIcon } from '@/services/hymns.service';
 import { useHymnsFavourites } from '@/hooks/useHymnsFavourites';
 
 import IconSvg from '@/components/Icon';
-import { FirstLineIndexSvg, NumberIndexSvg } from '@/components/svg/SvgIcons';
+import { LinesIndexSvg, NumberIndexSvg } from '@/components/svg/SvgIcons';
 
 import { ScreenHeading, SectionHeading } from '@/components/Headings';
 import HymnOfTheWeekCard from '@/components/HymnOfTheWeekCard';
@@ -99,7 +99,7 @@ const HymnsScreen = () => {
                             <IconSvg
                                 className="rounded-full items-center justify-center size-8"
                                 iconClassName="size-8 text-slate-800"
-                                Icon={FirstLineIndexSvg}
+                                Icon={LinesIndexSvg}
                             />
                             <Text className="font-googlesans-medium text-base leading-1.3 text-sky-900 line-clamp-1">
                                 First Line Index

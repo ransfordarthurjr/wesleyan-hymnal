@@ -157,7 +157,8 @@ export interface ListCardProps {
     scheme?: SchemeType;
     variant?: ListCardVariantsType;
 
-    title: string;
+    id: string;
+    label: string;
     mode: ListCardMode;
 
     Icon: IconComponent;
@@ -172,12 +173,30 @@ export interface ListCardLink {
 }
 
 export interface ListCardAction {
-    action: () => void;
+    params?: string[];
+    fxn: () => void;
+}
+
+export interface ListCardToggle {
+    isToggled: boolean;
+    onToggle?: (value: boolean) => void;
 }
 
 export type ListCardMode =
     | { mode: 'link'; link: ListCardLink }
-    | { mode: 'action'; action: ListCardAction };
+    | { mode: 'action'; action: ListCardAction }
+    | { mode: 'toggle'; toggle: ListCardToggle };
+
+export interface PreferencesActionInterface {
+    id: string;
+    fxn: (...params: string[]) => void;
+}
+
+export interface PreferencesToggleInterface {
+    id: string;
+    isToggled: boolean;
+    onToggle?: (value: boolean) => void;
+}
 
 export interface HymnsFavouritesOrderOptionInterface {
     label: string;

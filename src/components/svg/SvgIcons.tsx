@@ -53,7 +53,7 @@ export function HeartSvg({
         <StyledSvg
             viewBox="0 0 24 24"
             stroke="currentColor"
-            strokeWidth="0.6"
+            strokeWidth="0.1"
             strokeLinecap="round" // ✅ camelCase
             className={className}
             {...props}>
@@ -266,7 +266,7 @@ export function ArrowBackSvg({
     );
 }
 
-export function FirstLineIndexSvg({
+export function LinesIndexSvg({
     focused = false,
     className,
     ...props
@@ -322,7 +322,7 @@ export function UserSvg({
         <StyledSvg
             viewBox="0 0 24 24"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.6"
             strokeLinecap="round" // ✅ camelCase
             className={className}
             {...props}>
@@ -503,7 +503,7 @@ export function FontSizeSvg({
         <StyledSvg
             viewBox="0 0 1024 1024"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1"
             strokeLinecap="round"
             strokeLinejoin="round"
             className={className}
@@ -822,6 +822,72 @@ export function Size3XLSvg({
             <Path
                 fill="currentColor"
                 d="M9 7h2l1 2.5L13 7h2l-2 5l2 5h-2l-1-2.5l-1 2.5H9l2-5zm7 0h2v8h4v2h-6zm-8 8c0 1.11-.89 2-2 2H2v-2h4v-2H4v-2h2V9H2V7h4a2 2 0 0 1 2 2v1.5c0 .83-.67 1.5-1.5 1.5c.83 0 1.5.67 1.5 1.5z"
+            />
+        </StyledSvg>
+    );
+}
+
+export function BrokenLinesSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <G fill="none">
+                <Path d="m14 18l3.5-3l3.5 3" />
+                <Path d="M11 14H3m8 4H3M3 6h10.5M20 6h-2.25M20 10H9.5M3 10h2.25" />
+            </G>
+        </StyledSvg>
+    );
+}
+
+export function LanguageSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M6.666 12.46q.54-.325.54-.977t-.54-.99q-.539-.34-1.266-.34t-1.257.34t-.53.99t.53.978t1.257.325t1.266-.325M2.771 8.723q-.162 0-.279-.118t-.117-.282t.117-.278t.28-.114h2.184V6.796q0-.177.121-.298t.299-.121t.298.12q.12.122.12.3V7.93h2.21q.162 0 .279.118t.117.282t-.117.278t-.28.114zm2.62 4.856q-1.07 0-1.84-.548t-.77-1.548q0-1.004.77-1.56T5.4 9.367q1.085 0 1.865.556t.78 1.56t-.78 1.55t-1.873.546m-.394 3.679q-.343 0-.576-.232q-.232-.233-.232-.576v-1.754q0-.177.127-.298q.128-.121.302-.121t.295.12q.12.122.12.3v1.769h5.435q.162 0 .28.117q.116.119.116.282t-.117.278t-.279.115zm5.351-2.606q-.178 0-.298-.121t-.12-.298V7.27q0-.16.13-.277t.289-.117t.277.117t.117.277v3.01h1.56q.162 0 .279.118t.117.282t-.117.278t-.28.114H10.77v3.16q0 .177-.121.298t-.299.121m6.648 1.806q.791 0 1.608-.421q.816-.421 1.52-1.178v-3.34q-.682.112-1.26.261t-1.176.332q-1.298.427-1.928 1.077t-.63 1.484q0 .829.509 1.307t1.357.478m-.141.892q-1.229 0-1.977-.735q-.748-.736-.748-1.944q0-1.146.806-1.952t2.457-1.344q.46-.15 1.138-.294t1.593-.321v-.25q-.012-1.406-.521-2.117q-.51-.71-1.713-.71q-.602 0-1.189.178q-.586.18-1.204.548q-.165.099-.346.072t-.279-.193t-.027-.358t.237-.292q.698-.405 1.441-.63T18 6.785q1.583 0 2.354.995q.771.994.771 2.806v6.119q0 .178-.12.3t-.294.121h-.063q-.164 0-.283-.107t-.13-.272l-.07-.919q-.757.721-1.624 1.122q-.866.401-1.685.401"
+            />
+        </StyledSvg>
+    );
+}
+
+export function ResetPreferencesSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M13.212 13.904h2.577q.191 0 .317.125q.125.125.125.316t-.126.317t-.317.126h-2.576q-.192 0-.317-.125q-.126-.125-.126-.316t.126-.317t.317-.126m1.25 5.654v-1h-1.25q-.192 0-.317-.125q-.126-.126-.126-.317t.126-.317t.317-.126h1.25v-1q0-.192.125-.317t.316-.125t.317.125t.126.317v2.885q0 .191-.125.317q-.125.125-.316.125t-.317-.125t-.126-.317m2.519-1.885h2.577q.191 0 .317.125q.125.125.125.316t-.125.318t-.317.126H16.98q-.192 0-.317-.125q-.126-.126-.126-.317t.126-.317t.317-.126m.442-1.885v-2.884q0-.192.125-.317t.317-.125t.317.125t.126.317v1h1.25q.191 0 .317.125q.125.125.125.316t-.125.317t-.317.126h-1.25v1q0 .192-.125.317q-.125.126-.317.126t-.317-.126t-.126-.317M12 5Q9.075 5 7.038 7.038T5 12q0 2.108 1.11 3.79Q7.222 17.474 9 18.309V15.5q0-.213.144-.356T9.501 15t.356.144t.143.356v3.692q0 .344-.232.576T9.192 20H5.5q-.213 0-.356-.144T5 19.499t.144-.356T5.5 19h2.812q-1.916-1-3.114-2.851T4 12q0-1.665.626-3.119T6.34 6.34t2.54-1.714T12 4q2.562 0 4.56 1.418t2.886 3.688q.073.188.002.378t-.262.265t-.385-.007t-.268-.27q-.756-1.97-2.517-3.221T12 5"
             />
         </StyledSvg>
     );

@@ -38,6 +38,10 @@ export const DEFAULT_HYMNS_PREFERENCES_KEY_STANZA_FONT_FACE: string =
 export const HYMNS_PREFERENCES_KEY_STANZA_FONT_FACE: string =
     'hymns-preferences-stanza-font-face';
 
+export const DEFAULT_HYMNS_PREFERENCES_KEY_INCLUDE_ALL_LINES_IN_SEARCH: boolean = false;
+export const HYMNS_PREFERENCES_KEY_INCLUDE_ALL_LINES_IN_SEARCH: string =
+    'hymns-preferences-include-all-lines-in-search';
+
 export const APP_HEADING_MAIN = {
     title: 'Wesleyan Hymnal',
     mode: 'main',

@@ -25,7 +25,7 @@ import {
 import { useAuthSignOut } from '@/hooks/useAuthSignOut';
 import { PreferencesSvg } from '@/components/svg/SvgTabIcons';
 import { ScreenHeading } from '@/components/Headings';
-import { ActionCard, LinkCard } from '@/components/ListCards';
+import { ListCard } from '@/components/ListCards';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
@@ -136,44 +136,68 @@ const ProfileScreen = () => {
                 </View>
             </View>
 
-            <View className="flex-1 gap-y-6 px-2">
+            <View className="gap-y-6 px-2">
                 <View className="gap-y-0.5">
-                    <View className="flex-row items-center rounded-md rounded-t-2xl gap-x-4 px-5 py-3.5 bg-indigo-950">
-                        <IconSvg
-                            className="flex items-center justify-center rounded-full size-11 bg-sky-300"
-                            iconClassName="size-7 text-sky-800"
-                            Icon={UserSvg}
-                        />
-                        <Text className="font-googlesans-medium text-lg text-white">
-                            Account Details
-                        </Text>
-                    </View>
+                    <ListCard
+                        id="account"
+                        scheme="blue"
+                        variant="solid"
+                        label="Account Details"
+                        mode={{
+                            mode: 'link',
+                            link: { pathname: '/(auth)/account-details' },
+                        }}
+                        Icon={UserSvg}
+                        first={true}
+                        last={false}
+                    />
 
-                    <LinkCard
+                    <ListCard
+                        id="favourites"
                         scheme="fuchsia"
-                        pathname="/(hymns)/hymns-favourites"
+                        variant="solid"
+                        label="Favourites"
+                        mode={{
+                            mode: 'link',
+                            link: { pathname: '/(hymns)/hymns-favourites' },
+                        }}
                         Icon={HeartSvg}
-                        title="Favourites"
+                        first={false}
                         last={true}
                     />
                 </View>
 
                 <View className="gap-y-0.5">
-                    <ActionCard
-                        scheme="sky"
-                        action={() => {
-                            console.log('action');
+                    <ListCard
+                        id="preferences"
+                        scheme="blue"
+                        variant="solid"
+                        label="App Rating"
+                        mode={{
+                            mode: 'action',
+                            action: {
+                                fxn: () => {
+                                    console.log('app-rating');
+                                },
+                            },
                         }}
                         Icon={StarSvg}
-                        title="App Rating"
                         first={true}
+                        last={false}
                     />
 
-                    <LinkCard
-                        scheme="sky"
-                        pathname="/(tabs)/preferences"
+                    <ListCard
+                        id="preferences"
+                        scheme="blue"
+                        variant="solid"
+                        label="Preferences"
+                        mode={{
+                            mode: 'link',
+                            link: { pathname: '/(tabs)/preferences' },
+                        }}
                         Icon={PreferencesSvg}
-                        title="Preferences"
+                        first={false}
+                        last={false}
                     />
 
                     <View className="flex-row items-center rounded-md gap-x-4 px-5 py-3.5 bg-indigo-950">
@@ -199,7 +223,7 @@ const ProfileScreen = () => {
                 </View>
             </View>
 
-            <View className="gap-y-6 px-2">
+            <View className="flex-1 justify-end gap-y-6 px-2">
                 <View className="gap-y-0.5">
                     <View className="flex-row items-center justify-center border border-rose-200 rounded-2xl gap-x-4 px-5 py-2.5 bg-rose-100">
                         <Text className="font-googlesans-medium text-lg text-rose-800">

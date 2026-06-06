@@ -37,7 +37,7 @@ export const ScreenHeading = ({
 
 export const SectionHeading = ({ title }: { title: string }) => {
     return (
-        <Text className="shrink-0 font-googlesans-semibold text-lg text-slate-950">
+        <Text className="shrink-0 font-googlesans-medium text-lg text-slate-950">
             {title}
         </Text>
     );

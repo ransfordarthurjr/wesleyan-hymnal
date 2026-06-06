@@ -1,17 +1,32 @@
+import { useCallback, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
 
 import { styled } from 'nativewind';
 
 import { APP_HEADING_TAB } from '@/constants/app.constants';
+import { DEFAULT_HYMNS_PREFERENCES_KEY_INCLUDE_ALL_LINES_IN_SEARCH } from '@/constants/app.constants';
 import { ListCardProps, ScreenHeadingProps } from '@/types/app.types';
 
 import { getSchemeById } from '@/utils/utility';
+import {
+    getPreferredIncludeAllLinesInSearch,
+    mapPreferences,
+    resetAllPreferencesToDefault,
+    setPreferredIncludeAllLinesInSearch,
+} from '@/services/preferences.service';
 
-import { ScreenHeading } from '@/components/Headings';
-import { FontSizeSvg, HeartSvg, SignOutSvg } from '@/components/svg/SvgIcons';
+import { ScreenHeading, SectionHeading } from '@/components/Headings';
+import {
+    BrokenLinesSvg,
+    FontSizeSvg,
+    HeartSvg,
+    LanguageSvg,
+    ResetPreferencesSvg,
+    UserSvg,
+} from '@/components/svg/SvgIcons';
 import { ListCard } from '@/components/ListCards';
-import SwitchControl from '@/components/Swtich';
+import { NotificationsSvg } from '@/components/svg/SvgTabIcons';
 
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
@@ -21,11 +36,56 @@ const PreferencesScreen = () => {
         title: 'Preferences',
     } as ScreenHeadingProps;
 
+    const [includeAllLinesInSearch, setIncludeAllLinesInSearch] =
+        useState<boolean>(getPreferredIncludeAllLinesInSearch());
+
+    const handleSwitchIncludeAllLinesInSearch = useCallback(
+        (value: boolean) => {
+            setIncludeAllLinesInSearch(value);
+            setPreferredIncludeAllLinesInSearch(value);
+        },
+        [],
+    );
+
+    const handleResetAllPreferences = useCallback(() => {
+        resetAllPreferencesToDefault();
+        setIncludeAllLinesInSearch(
+            DEFAULT_HYMNS_PREFERENCES_KEY_INCLUDE_ALL_LINES_IN_SEARCH,
+        );
+    }, []);
+
+    const PREFERENCES_SECTION_LITERATURE_MAPPED = useMemo(
+        () =>
+            mapPreferences(PREFERENCES_SECTION_LITERATURE, {
+                toggles: [
+                    {
+                        id: 'include-all-lines',
+                        isToggled: includeAllLinesInSearch,
+                        onToggle: handleSwitchIncludeAllLinesInSearch,
+                    },
+                ],
+            }),
+        [includeAllLinesInSearch, handleSwitchIncludeAllLinesInSearch],
+    );
+
+    const PREFERENCES_SECTION_RESET_MAPPED = useMemo(
+        () =>
+            mapPreferences(PREFERENCES_SECTION_RESET, {
+                actions: [
+                    {
+                        id: 'reset-preferences',
+                        fxn: handleResetAllPreferences,
+                    },
+                ],
+            }),
+        [handleResetAllPreferences],
+    );
+
     return (
         <SafeAreaView className="flex-1 gap-y-6 p-2 bg-white">
             <View className="flex-row items-center gap-x-2 px-1">
                 {heading.mode === 'sub' && (
-                    <View className="shrink-0 flex-row items-center justify-center size-8"></View>
+                    <View className="shrink-0 flex-row items-center justify-center size-8" />
                 )}
 
                 <ScreenHeading
@@ -40,72 +100,124 @@ const PreferencesScreen = () => {
 
             <View className="flex-1 gap-y-6">
                 <View className="gap-y-0.5">
-                    {PREFENCES_SECTION_01.map((pref, index) => {
-                        return (
-                            <ListCard
-                                key={pref.title + '' + index}
-                                scheme={pref.scheme}
-                                variant={pref.variant}
-                                title={pref.title}
-                                mode={pref.mode}
-                                Icon={pref.Icon}
-                                first={index === 0}
-                                last={index === PREFENCES_SECTION_01.length - 1}
-                            />
-                        );
-                    })}
+                    <SectionHeading title="General" />
+
+                    {PREFERENCES_SECTION_GENERAL.map((pref, index) => (
+                        <ListCard
+                            key={pref.id}
+                            id={pref.id}
+                            scheme={pref.scheme}
+                            variant={pref.variant}
+                            label={pref.label}
+                            mode={pref.mode}
+                            Icon={pref.Icon}
+                            first={index === 0}
+                            last={
+                                index === PREFERENCES_SECTION_GENERAL.length - 1
+                            }
+                        />
+                    ))}
                 </View>
 
                 <View className="gap-y-0.5">
-                    {PREFENCES_SECTION_0X.map((pref, index) => {
-                        return (
+                    <SectionHeading title="Reading" />
+
+                    {PREFERENCES_SECTION_LITERATURE_MAPPED.map(
+                        (pref, index) => (
                             <ListCard
-                                key={pref.title + '' + index}
+                                key={pref.id}
+                                id={pref.id}
                                 scheme={pref.scheme}
                                 variant={pref.variant}
-                                title={pref.title}
+                                label={pref.label}
                                 mode={pref.mode}
                                 Icon={pref.Icon}
                                 first={index === 0}
-                                last={index === PREFENCES_SECTION_0X.length - 1}
+                                last={
+                                    index ===
+                                    PREFERENCES_SECTION_LITERATURE_MAPPED.length -
+                                        1
+                                }
                             />
-                        );
-                    })}
+                        ),
+                    )}
                 </View>
 
-                <View className="gap-y-0.5">
-                    <SwitchControl toogle={false} />
-                    <SwitchControl toogle={true} />
+                <View className="flex-1 justify-end gap-y-0.5">
+                    {PREFERENCES_SECTION_RESET_MAPPED.map((pref, index) => (
+                        <ListCard
+                            key={pref.id}
+                            id={pref.id}
+                            scheme={pref.scheme}
+                            variant={pref.variant}
+                            label={pref.label}
+                            mode={pref.mode}
+                            Icon={pref.Icon}
+                            first={index === 0}
+                            last={
+                                index ===
+                                PREFERENCES_SECTION_RESET_MAPPED.length - 1
+                            }
+                        />
+                    ))}
                 </View>
-
-                <View id="font-size" className="shrink-0 gap-y-4 px-3"></View>
             </View>
 
-            <View className="shrink-0 h-9" />
+            <View className="shrink-0 h-18" />
         </SafeAreaView>
     );
 };
 
 export default PreferencesScreen;
 
-const PREFENCES_SECTION_01: ListCardProps[] = [
+const PREFERENCES_SECTION_GENERAL: ListCardProps[] = [
     {
-        scheme: getSchemeById('sky').scheme,
+        scheme: getSchemeById('violet').scheme,
+        variant: 'outline',
+        id: 'profile',
+        label: 'Profile',
+        mode: {
+            mode: 'link',
+            link: { pathname: '/(auth)/profile', params: { pref: 'profile' } },
+        },
+        Icon: UserSvg,
+    },
+    {
+        scheme: getSchemeById('blue').scheme,
         variant: 'solid',
-        title: 'Font',
+        id: 'language',
+        label: 'Language',
         mode: {
             mode: 'link',
             link: {
-                pathname: '/(preference)/font',
-                params: { pref: 'font' },
+                pathname: '/(preferences)/language',
+                params: { pref: 'language' },
             },
         },
-        Icon: FontSizeSvg,
+        Icon: LanguageSvg,
     },
+    {
+        scheme: getSchemeById('orange').scheme,
+        variant: 'solid',
+        id: 'notifications',
+        label: 'Notifications',
+        mode: {
+            mode: 'link',
+            link: {
+                pathname: '/(preferences)/notifications',
+                params: { pref: 'notifications' },
+            },
+        },
+        Icon: NotificationsSvg,
+    },
+];
+
+const PREFERENCES_SECTION_LITERATURE: ListCardProps[] = [
     {
         scheme: getSchemeById('fuchsia').scheme,
         variant: 'solid',
-        title: 'Favourites',
+        id: 'favourites',
+        label: 'Favourites',
         mode: {
             mode: 'link',
             link: {
@@ -115,35 +227,42 @@ const PREFENCES_SECTION_01: ListCardProps[] = [
         },
         Icon: HeartSvg,
     },
-];
-
-const PREFENCES_SECTION_0X: ListCardProps[] = [
     {
-        scheme: getSchemeById('rose').scheme,
-        variant: 'outline',
-        title: 'Sign Out',
+        scheme: getSchemeById('blue').scheme,
+        variant: 'solid',
+        id: 'font',
+        label: 'Font',
         mode: {
-            mode: 'action',
-            action: {
-                action: () => {
-                    console.log('Action');
-                },
-            },
+            mode: 'link',
+            link: { pathname: '/(preferences)/font', params: { pref: 'font' } },
         },
-        Icon: SignOutSvg,
+        Icon: FontSizeSvg,
     },
     {
-        scheme: getSchemeById('rose').scheme,
+        scheme: getSchemeById('blue').scheme,
         variant: 'outline',
-        title: 'Sign Out',
+        id: 'include-all-lines',
+        label: 'Include all lines in search',
         mode: {
-            mode: 'action',
-            action: {
-                action: () => {
-                    console.log('Action');
-                },
+            mode: 'toggle',
+            toggle: {
+                isToggled: false,
             },
         },
-        Icon: SignOutSvg,
+        Icon: BrokenLinesSvg,
+    },
+];
+
+const PREFERENCES_SECTION_RESET: ListCardProps[] = [
+    {
+        scheme: getSchemeById('rose').scheme,
+        variant: 'outline',
+        id: 'reset-preferences',
+        label: 'Reset Preferences',
+        mode: {
+            mode: 'action',
+            action: { fxn: () => {} },
+        },
+        Icon: ResetPreferencesSvg,
     },
 ];

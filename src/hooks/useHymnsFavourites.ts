@@ -17,7 +17,9 @@ import {
 import {
     getFavouriteHymnsIndexes,
     getFavouriteHymnsOrder,
+    removeAllHymnsFromFavourites,
     removeHymnFromFavourites,
+    removeHymnsFromFavourites,
     setFavouriteHymnsOrder,
     toggleHymnToFavourites,
 } from '@/services/hymns.service';
@@ -44,11 +46,21 @@ export const useHymnsFavourites = (): UseHymnsFavouritesReturn => {
         [refresh],
     );
 
-    const remove = useCallback((ordinal: number) => {
+    const removeHymn = useCallback((ordinal: number) => {
         removeHymnFromFavourites(ordinal);
         setFavouriteIndexes((prev) =>
             prev.filter((h) => h.ordinal !== ordinal),
         );
+    }, []);
+
+    const removeHymns = useCallback((ordinals: number[]) => {
+        removeHymnsFromFavourites(ordinals);
+        setFavouriteIndexes(getFavouriteHymnsIndexes());
+    }, []);
+
+    const removeAllHymns = useCallback(() => {
+        removeAllHymnsFromFavourites();
+        setFavouriteIndexes(getFavouriteHymnsIndexes());
     }, []);
 
     const setOrder = useCallback(
@@ -71,7 +83,9 @@ export const useHymnsFavourites = (): UseHymnsFavouritesReturn => {
         favouriteIndexes,
         order,
         toggle,
-        remove,
+        removeHymn,
+        removeHymns,
+        removeAllHymns,
         setOrder,
         isFavourite,
         refresh,

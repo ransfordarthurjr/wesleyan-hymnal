@@ -154,6 +154,21 @@ export const removeHymnFromFavourites = (ordinal: number): Set<number> => {
     return favourites;
 };
 
+export const removeHymnsFromFavourites = (ordinals: number[]): Set<number> => {
+    const favourites: Set<number> = getFavouriteHymns();
+    ordinals.forEach(ordinal => { favourites.delete(ordinal) })
+
+    const favouritesArray = Array.from(favourites);
+    mmkv.set(HYMNS_FAVOURITES_KEY, JSON.stringify(favouritesArray));
+    return favourites;
+};
+
+export const removeAllHymnsFromFavourites = (): Set<number> => {
+    const favourites: Set<number> = new Set<number>();
+    mmkv.set(HYMNS_FAVOURITES_KEY, JSON.stringify(Array.from(favourites)));
+    return favourites;
+};
+
 export const getOrderingIcon = (currentOrder: string) => {
     switch (currentOrder) {
         case 'ascending':

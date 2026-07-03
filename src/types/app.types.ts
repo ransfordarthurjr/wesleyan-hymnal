@@ -208,7 +208,9 @@ export interface UseHymnsFavouritesReturn {
     favouriteIndexes: HymnIndexInterface[];
     order: string;
     toggle: (ordinal: number) => void;
-    remove: (ordinal: number) => void;
+    removeHymn: (ordinal: number) => void;
+    removeHymns: (ordinals: number[]) => void;
+    removeAllHymns: () => void;
     setOrder: (order: string) => void;
     isFavourite: (ordinal: number) => boolean;
     refresh: () => void;

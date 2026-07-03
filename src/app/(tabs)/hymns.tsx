@@ -4,7 +4,7 @@ import {
     SafeAreaView as ReactNativeSafeAreaView,
     useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 import { styled } from 'nativewind';
 
@@ -24,7 +24,11 @@ import { getIndexes, getOrderingIcon } from '@/services/hymns.service';
 import { useHymnsFavourites } from '@/hooks/useHymnsFavourites';
 
 import IconSvg from '@/components/Icon';
-import { LinesIndexSvg, NumberIndexSvg } from '@/components/svg/SvgIcons';
+import {
+    LinesIndexSvg,
+    NumberIndexSvg,
+    ViewAllSvg,
+} from '@/components/svg/SvgIcons';
 
 import { ScreenHeading, SectionHeading } from '@/components/Headings';
 import HymnOfTheWeekCard from '@/components/HymnOfTheWeekCard';
@@ -138,17 +142,37 @@ const HymnsScreen = () => {
                     <View className="flex-row items-center justify-between">
                         <SectionHeading title="Favourites" />
 
-                        <View className="shrink-0 flex-row items-center gap-x-6 px-1">
-                            <Pressable
-                                onPress={() => handleOrderAndCycleToNextOrder()}
-                                className="shrink-0 flex-row items-center justify-center">
-                                <IconSvg
-                                    className="rounded-full items-center justify-center size-6"
-                                    iconClassName={cn('size-6 text-indigo-900')}
-                                    Icon={getOrderingIcon(order)}
-                                />
-                            </Pressable>
-                        </View>
+                        {favouriteIndexes.length !== 0 && (
+                            <View className="shrink-0 flex-row items-center gap-x-8 px-1">
+                                <Pressable
+                                    onPress={() =>
+                                        router.push('/(hymns)/hymns-favourites')
+                                    }
+                                    className="shrink-0 flex-row items-center justify-center">
+                                    <IconSvg
+                                        className="items-center justify-center size-6"
+                                        iconClassName={cn(
+                                            'size-6 text-indigo-900',
+                                        )}
+                                        Icon={ViewAllSvg}
+                                    />
+                                </Pressable>
+
+                                <Pressable
+                                    onPress={() =>
+                                        handleOrderAndCycleToNextOrder()
+                                    }
+                                    className="shrink-0 flex-row items-center justify-center">
+                                    <IconSvg
+                                        className="items-center justify-center size-6"
+                                        iconClassName={cn(
+                                            'size-6 text-indigo-900',
+                                        )}
+                                        Icon={getOrderingIcon(order)}
+                                    />
+                                </Pressable>
+                            </View>
+                        )}
                     </View>
 
                     <View className="flex-1">

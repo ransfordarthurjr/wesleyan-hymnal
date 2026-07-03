@@ -3,8 +3,9 @@ import { View } from 'react-native';
 import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
 
 import { styled } from 'nativewind';
+import Toast from 'react-native-toast-message';
 
-import { APP_HEADING_TAB } from '@/constants/app.constants';
+import { APP_HEADING_TAB, LOREM_IPSUM } from '@/constants/app.constants';
 import { DEFAULT_HYMNS_PREFERENCES_KEY_INCLUDE_ALL_LINES_IN_SEARCH } from '@/constants/app.constants';
 import { ListCardProps, ScreenHeadingProps } from '@/types/app.types';
 
@@ -52,6 +53,11 @@ const PreferencesScreen = () => {
         setIncludeAllLinesInSearch(
             DEFAULT_HYMNS_PREFERENCES_KEY_INCLUDE_ALL_LINES_IN_SEARCH,
         );
+        Toast.show({
+            type: 'toaster',
+            text1: 'All preferences have been reset to their defaults.',
+            props: { scheme: 'orange' },
+        });
     }, []);
 
     const PREFERENCES_SECTION_LITERATURE_MAPPED = useMemo(
@@ -120,7 +126,7 @@ const PreferencesScreen = () => {
                 </View>
 
                 <View className="gap-y-0.5">
-                    <SectionHeading title="Reading" />
+                    <SectionHeading title="Literature" />
 
                     {PREFERENCES_SECTION_LITERATURE_MAPPED.map(
                         (pref, index) => (

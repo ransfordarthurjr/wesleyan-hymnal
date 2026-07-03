@@ -1,6 +1,6 @@
 /* react, react-native, expo */
 import { useRef } from 'react';
-import { FlatList, Pressable, Text, View } from 'react-native';
+import { Alert, FlatList, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ReanimatedSwipeable, {
     SwipeableMethods,
@@ -10,25 +10,37 @@ import Animated, {
     SharedValue,
     useAnimatedStyle,
 } from 'react-native-reanimated';
+import Toast from 'react-native-toast-message';
 
 import { router } from 'expo-router';
 
 /* constants & utilities */
-import { APP_HEADING_SUB } from '@/constants/app.constants';
+import {
+    APP_HEADING_SUB,
+    HYMNS_FAVOURITES_ORDER_OPTIONS,
+} from '@/constants/app.constants';
 import {
     HymnIndexInterface,
     SchemeMetaDataInterface,
     ScreenHeadingProps,
 } from '@/types/app.types';
-import { getSchemes } from '@/utils/utility';
+import { cn, getSchemes } from '@/utils/utility';
+
+/* services */
+import { getOrderingIcon } from '@/services/hymns.service';
 
 /* custom defined hooks */
 import { useHymnsFavourites } from '@/hooks/useHymnsFavourites';
 
 /* components */
 import IconSvg from '@/components/Icon';
-import { ArrowBackSvg, DeleteSvg, HeartSvg } from '@/components/svg/SvgIcons';
-import { ScreenHeading } from '@/components/Headings';
+import {
+    ArrowBackSvg,
+    DeleteAllSvg,
+    DeleteSvg,
+    HeartSvg,
+} from '@/components/svg/SvgIcons';
+import { ScreenHeading, SectionHeading } from '@/components/Headings';
 import { HymnFavouriteCard } from '@/components/HymnIndexCards';
 
 const SCHEMES_META_DATA: SchemeMetaDataInterface[] = getSchemes();
@@ -41,7 +53,41 @@ export const HymnsFavouritesScreen = () => {
 
     const { top, bottom } = useSafeAreaInsets();
 
-    const { favouriteIndexes, remove } = useHymnsFavourites();
+    const { favouriteIndexes, order, removeAllHymns, removeHymn, setOrder } =
+        useHymnsFavourites();
+
+    const handleOrderAndCycleToNextOrder = () => {
+        const currentIndex = HYMNS_FAVOURITES_ORDER_OPTIONS.findIndex(
+            (opt) => opt.value === order,
+        );
+        const nextIndex =
+            (currentIndex + 1) % HYMNS_FAVOURITES_ORDER_OPTIONS.length;
+
+        setOrder(HYMNS_FAVOURITES_ORDER_OPTIONS[nextIndex].value);
+    };
+
+    const handleRemoveAll = () => {
+        Alert.alert(
+            'Remove All Favourites',
+            'All favourites will be removed.',
+            [
+                {
+                    text: 'Remove All',
+                    style: 'destructive',
+                    onPress: () => {
+                        removeAllHymns();
+
+                        Toast.show({
+                            type: 'toaster',
+                            text1: 'All favourites have been removed',
+                            props: { scheme: 'rose', icon: DeleteAllSvg },
+                        });
+                    },
+                },
+                { text: 'Cancel', style: 'cancel' },
+            ],
+        );
+    };
 
     return (
         <View
@@ -73,7 +119,35 @@ export const HymnsFavouritesScreen = () => {
                 <View className="shrink-0 flex-row items-center justify-center size-8" />
             </View>
 
-            <View className="flex-1">
+            <View className="flex-1 gap-y-2 pt-2">
+                <View className="flex-row items-center justify-between">
+                    <View></View>
+
+                    {favouriteIndexes.length !== 0 && (
+                        <View className="shrink-0 flex-row items-center gap-x-8 px-1">
+                            <Pressable
+                                onPress={() => handleRemoveAll()}
+                                className="shrink-0 flex-row items-center justify-center">
+                                <IconSvg
+                                    className="items-center justify-center size-6"
+                                    iconClassName="size-6 text-rose-900"
+                                    Icon={DeleteAllSvg}
+                                />
+                            </Pressable>
+
+                            <Pressable
+                                onPress={() => handleOrderAndCycleToNextOrder()}
+                                className="shrink-0 flex-row items-center justify-center">
+                                <IconSvg
+                                    className="items-center justify-center size-6"
+                                    iconClassName={cn('size-6 text-indigo-900')}
+                                    Icon={getOrderingIcon(order)}
+                                />
+                            </Pressable>
+                        </View>
+                    )}
+                </View>
+
                 {favouriteIndexes.length === 0 ? (
                     <FavouritesEmptyState />
                 ) : (
@@ -85,7 +159,7 @@ export const HymnsFavouritesScreen = () => {
                                 item={item}
                                 index={index}
                                 total={favouriteIndexes.length}
-                                onDelete={remove}
+                                onDelete={removeHymn}
                             />
                         )}
                         ItemSeparatorComponent={() => <View className="h-1" />}
@@ -197,7 +271,7 @@ export const FavouritesEmptyState = () => (
             <Text className="font-googlesans-medium text-base text-slate-950">
                 No favourites yet
             </Text>
-            <Text className="font-googlesans-regular text-sm text-slate-400 text-center px-8">
+            <Text className="font-googlesans-regular text-sm text-slate-500 text-center px-8">
                 Hymns you favourite will appear here
             </Text>
         </View>

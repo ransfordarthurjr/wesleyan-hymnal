@@ -892,3 +892,69 @@ export function ResetPreferencesSvg({
         </StyledSvg>
     );
 }
+
+export function ToastInfoSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M10.934 6.566Q10.5 6.133 10.5 5.5t.434-1.066Q11.367 4 12 4t1.066.434T13.5 5.5t-.434 1.066Q12.633 7 12 7t-1.066-.434m.36 13.14Q11 19.414 11 19v-8.23q0-.414.293-.707T12 9.769t.707.293t.293.707V19q0 .414-.293.707T12 20t-.707-.293"
+            />
+        </StyledSvg>
+    );
+}
+
+export function DeleteAllSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 16 16"
+            stroke="currentColor"
+            strokeWidth="0.1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M13.5 12a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1zm0-3a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1zm0-3a.5.5 0 0 1 0 1h-6a.5.5 0 0 1 0-1zM5.5.999a.5.5 0 0 1 .354.855L3.707 4l2.147 2.146a.502.502 0 0 1-.708.708L3 4.707L.854 6.854a.5.5 0 0 1-.708-.708L2.293 4L.146 1.854a.5.5 0 0 1 .708-.708L3 3.293l2.146-2.147A.5.5 0 0 1 5.5.999M13.5 3a.5.5 0 0 1 0 1h-6a.5.5 0 0 1 0-1z"
+            />
+        </StyledSvg>
+    );
+}
+
+export function ViewAllSvg({
+    focused = false,
+    className,
+    ...props
+}: SvgProps & { focused?: boolean; className?: string }) {
+    return (
+        <StyledSvg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="0.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+            {...props}>
+            <Path
+                fill="currentColor"
+                d="M12 9.005a4 4 0 1 1 0 8a4 4 0 0 1 0-8M12 5.5c4.613 0 8.596 3.15 9.701 7.564a.75.75 0 1 1-1.455.365a8.504 8.504 0 0 0-16.493.004a.75.75 0 0 1-1.456-.363A10 10 0 0 1 12 5.5"
+            />
+        </StyledSvg>
+    );
+}

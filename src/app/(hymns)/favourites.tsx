@@ -272,7 +272,7 @@ export const FavouritesEmptyState = () => (
                 No favourites yet
             </Text>
             <Text className="font-googlesans-regular text-sm text-slate-500 text-center px-8">
-                Hymns you favourite will appear here
+                Add hymns to your favourites to see them here
             </Text>
         </View>
     </View>

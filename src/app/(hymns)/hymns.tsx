@@ -1,36 +1,72 @@
+/* react, react-native, expo */
 import { useMemo, useRef, useState } from 'react';
-import { FlatList, Pressable, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+    Alert,
+    Pressable,
+    Text,
+    TextInput as ReactNativeTextInput,
+    View,
+    FlatList,
+} from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { TextInput as ReactNativeTextInput } from 'react-native';
+import { Image } from 'expo-image';
 
+/* react-native-... */
+import {
+    SafeAreaView as ReactNativeSafeAreaView,
+    useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+
+/* nativewind */
 import { styled } from 'nativewind';
 
-import { APP_HEADING_SUB } from '@/constants/app.constants';
+/* 3rd party libs */
+
+/* constants & utilities */
 import {
     HymnIndexInterface,
     HymnIndexModeType,
     SchemeType,
     ScreenHeadingProps,
 } from '@/types/app.types';
-
+import { APP_HEADING_SUB, APP_NAME } from '@/constants/app.constants';
 import { cn } from '@/utils/utility';
-import { getIndexes } from '@/services/hymns.service';
 
+/* custom defined hooks */
+import { useAuth } from '@/hooks/useAuth';
+import { useAuthSignOut } from '@/hooks/useAuthSignOut';
+
+/* services */
+import { getIndexes, unInit } from '@/services/hymns.service';
+
+/* components */
 import IconSvg from '@/components/Icon';
 import {
     ArrowBackSvg,
+    DeleteSvg,
+    EditSvg,
+    HeartSvg,
+    HelpSvg,
     LinesIndexSvg,
     NumberIndexSvg,
+    ProcessingSvg,
     SearchSvg,
+    SignOutSvg,
+    StarSvg,
+    UserSvg,
 } from '@/components/svg/SvgIcons';
+import { PreferencesSvg } from '@/components/svg/SvgTabIcons';
+import { ListCard } from '@/components/ListCards';
 import { ScreenHeading } from '@/components/Headings';
 import {
     HymnIndexFirstLineCard,
     HymnIndexGridCard,
 } from '@/components/HymnIndexCards';
 
+/* Styled RNs */
+const SafeAreaView = styled(ReactNativeSafeAreaView);
 const TextInput = styled(ReactNativeTextInput);
+
 const HymnsIndexScreen = () => {
     const heading: ScreenHeadingProps = {
         ...APP_HEADING_SUB,
@@ -133,7 +169,8 @@ const HymnsIndexScreen = () => {
             <View className="px-2 gap-y-0.5">
                 <Pressable
                     onPress={() => searchInputRef.current?.focus()}
-                    className="flex-row items-center gap-x-4 border border-indigo-400 rounded-md px-4 py-1 bg-indigo-200">
+                    className="flex-row items-center gap-x-4 border border-indigo-400 rounded-md px-4 bg-indigo-200"
+                    style={{ height: 56 }}>
                     <View className="flex-1 flex-row">
                         <TextInput
                             ref={searchInputRef}
@@ -143,18 +180,24 @@ const HymnsIndexScreen = () => {
                                     : 'Search First Line Index...'
                             }
                             maxLength={32}
-                            className="font-googlesans-semibold text-xl text-indigo-900 placeholder:font-googlesans-regular placeholder:text-lg  placeholder:text-indigo-400"
+                            className="font-googlesans-semibold text-xl text-indigo-900 placeholder:font-googlesans-regular placeholder:text-lg placeholder:text-indigo-400"
+                            style={{
+                                flex: 1,
+                                includeFontPadding: false,
+                                textAlignVertical: 'center',
+                                lineHeight: 24,
+                            }}
+                            cursorColor="#4338CA"
+                            selectionColor="#4338CA"
                             keyboardType={
                                 indexMode === 'grid' ? 'number-pad' : 'default'
                             }
                             value={searchQuery}
                             onChangeText={handleSearchChange}
-                            onFocus={() => {
-                                setSearchIconColor('text-indigo-600');
-                            }}
-                            onBlur={() => {
-                                setSearchIconColor('text-indigo-400');
-                            }}
+                            onFocus={() =>
+                                setSearchIconColor('text-indigo-600')
+                            }
+                            onBlur={() => setSearchIconColor('text-indigo-400')}
                         />
                     </View>
                     <IconSvg

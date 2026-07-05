@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1017884881424-5kkhn341agkq35f581afautafdef47lk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tech.hephaestus.wesleyan.hymnal",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "1017884881424-uvgp63360l47t9te2ekebedn7lcqm5au.apps.googleusercontent.com",
           "client_type": 3
         }

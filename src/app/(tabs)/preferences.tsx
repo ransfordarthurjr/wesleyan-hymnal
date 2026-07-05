@@ -1,15 +1,27 @@
+/* react, react-native, expo */
 import { useCallback, useMemo, useState } from 'react';
-import { View } from 'react-native';
-import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
+import { Alert, View } from 'react-native';
 
-import { styled } from 'nativewind';
+/* react-native-... */
+import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import { APP_HEADING_TAB, LOREM_IPSUM } from '@/constants/app.constants';
-import { DEFAULT_HYMNS_PREFERENCES_KEY_INCLUDE_ALL_LINES_IN_SEARCH } from '@/constants/app.constants';
-import { ListCardProps, ScreenHeadingProps } from '@/types/app.types';
+/* nativewind */
+import { styled } from 'nativewind';
 
+/* 3rd party libs */
+
+/* constants & utilities */
+import {
+    APP_HEADING_TAB,
+    DEFAULT_HYMNS_PREFERENCES_KEY_INCLUDE_ALL_LINES_IN_SEARCH,
+} from '@/constants/app.constants';
+import { ListCardProps, ScreenHeadingProps } from '@/types/app.types';
 import { getSchemeById } from '@/utils/utility';
+
+/* custom defined hooks */
+
+/* services */
 import {
     getPreferredIncludeAllLinesInSearch,
     mapPreferences,
@@ -17,7 +29,7 @@ import {
     setPreferredIncludeAllLinesInSearch,
 } from '@/services/preferences.service';
 
-import { ScreenHeading, SectionHeading } from '@/components/Headings';
+/* components */
 import {
     BrokenLinesSvg,
     FontSizeSvg,
@@ -26,9 +38,11 @@ import {
     ResetPreferencesSvg,
     UserSvg,
 } from '@/components/svg/SvgIcons';
-import { ListCard } from '@/components/ListCards';
 import { NotificationsSvg } from '@/components/svg/SvgTabIcons';
+import { ScreenHeading, SectionHeading } from '@/components/Headings';
+import { ListCard } from '@/components/ListCards';
 
+/* Styled RNs */
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
 const PreferencesScreen = () => {
@@ -39,6 +53,7 @@ const PreferencesScreen = () => {
 
     const [includeAllLinesInSearch, setIncludeAllLinesInSearch] =
         useState<boolean>(getPreferredIncludeAllLinesInSearch());
+    const [isResetting, setIsResetting] = useState<boolean>(false);
 
     const handleSwitchIncludeAllLinesInSearch = useCallback(
         (value: boolean) => {
@@ -49,6 +64,25 @@ const PreferencesScreen = () => {
     );
 
     const handleResetAllPreferences = useCallback(() => {
+        Alert.alert(
+            'Reset all your preferences',
+            `Are you sure you want to reset all your preferences to their default values?`,
+            [
+                {
+                    text: 'Reset',
+                    style: 'default',
+                    onPress: async () => {
+                        setIsResetting(true);
+                        resetAllPreferences();
+                        setIsResetting(false);
+                    },
+                },
+                { text: 'Cancel', style: 'cancel' },
+            ],
+        );
+    }, []);
+
+    const resetAllPreferences = () => {
         resetAllPreferencesToDefault();
         setIncludeAllLinesInSearch(
             DEFAULT_HYMNS_PREFERENCES_KEY_INCLUDE_ALL_LINES_IN_SEARCH,
@@ -58,7 +92,7 @@ const PreferencesScreen = () => {
             text1: 'All preferences have been reset to their defaults.',
             props: { scheme: 'orange' },
         });
-    }, []);
+    };
 
     const PREFERENCES_SECTION_LITERATURE_MAPPED = useMemo(
         () =>
@@ -184,7 +218,10 @@ const PREFERENCES_SECTION_GENERAL: ListCardProps[] = [
         label: 'Profile',
         mode: {
             mode: 'link',
-            link: { pathname: '/(auth)/profile', params: { pref: 'profile' } },
+            link: {
+                pathname: '/(profile)/profile',
+                params: { pref: 'profile' },
+            },
         },
         Icon: UserSvg,
     },
@@ -210,8 +247,8 @@ const PREFERENCES_SECTION_GENERAL: ListCardProps[] = [
         mode: {
             mode: 'link',
             link: {
-                pathname: '/(preferences)/notifications',
-                params: { pref: 'notifications' },
+                pathname: '/(preferences)/notification',
+                params: { pref: 'notification' },
             },
         },
         Icon: NotificationsSvg,
@@ -240,7 +277,10 @@ const PREFERENCES_SECTION_LITERATURE: ListCardProps[] = [
         label: 'Font',
         mode: {
             mode: 'link',
-            link: { pathname: '/(preferences)/font', params: { pref: 'font' } },
+            link: {
+                pathname: '/(preferences)/font',
+                params: { pref: 'font' },
+            },
         },
         Icon: FontSizeSvg,
     },

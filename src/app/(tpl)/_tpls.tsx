@@ -1,13 +1,18 @@
 /* react, react-native, expo */
 import { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import {
+    Pressable,
+    Text,
+    TextInput as ReactNativeTextInput,
+    View,
+} from 'react-native';
+import { router } from 'expo-router';
+
+/* react-native-... */
 import {
     SafeAreaView as ReactNativeSafeAreaView,
     useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-
-import { router } from 'expo-router';
-import { TextInput as ReactNativeTextInput } from 'react-native';
 
 /* nativewind */
 import { styled } from 'nativewind';
@@ -15,7 +20,7 @@ import { styled } from 'nativewind';
 /* 3rd party libs */
 
 /* constants & utilities */
-import { APP_HEADING_TAB } from '@/constants/app.constants';
+import { APP_HEADING_SUB, APP_HEADING_TAB } from '@/constants/app.constants';
 import { ScreenHeadingProps } from '@/types/app.types';
 import { cn } from '@/utils/utility';
 

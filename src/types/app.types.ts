@@ -1,5 +1,15 @@
 import { SvgProps } from 'react-native-svg';
 
+export interface StartUpInterface {
+    id: string;
+    name: string;
+}
+
+export interface StartUpIndicatorProps {
+    startup: StartUpInterface;
+    active: boolean;
+}
+
 export interface ScreenHeadingProps {
     title: string;
     mode: 'main' | 'tab' | 'sub';

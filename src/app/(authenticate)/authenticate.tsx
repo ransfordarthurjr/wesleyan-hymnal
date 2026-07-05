@@ -1,43 +1,54 @@
+/* react, react-native, expo */
 import { useEffect } from 'react';
-import {
-    Button,
-    Platform,
-    Text,
-    StyleSheet,
-    View,
-    Pressable,
-} from 'react-native';
-import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
-import appleAuth, {
-    AppleButton,
-} from '@invertase/react-native-apple-authentication';
-import { ImageBackground } from 'expo-image';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
+import { ImageBackground } from 'expo-image';
 
+/* react-native-... */
+import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
+
+/* nativewind */
 import { styled } from 'nativewind';
 
-import { ScreenHeadingProps } from '@/types/app.types';
+/* 3rd party libs */
+
+/* constants & utilities */
 import { APP_HEADING_MAIN } from '@/constants/app.constants';
+import { ScreenHeadingProps } from '@/types/app.types';
 import { generateRandomMathNumber } from '@/utils/utility';
-
-import { useAuth } from '@/hooks/useAuth';
-import { useAuthGoogle } from '@/hooks/useAuthGoogle';
-import { useAuthApple } from '@/hooks/useAuthApple';
-
-import IconSvg from '@/components/Icon';
-
-import { AppleSvg, GoogleSvg } from '@/components/svg/SvgSocialIcons';
 import { BACKGROUND_IMAGES } from '@/constants/auth.constants';
 
+/* custom defined hooks */
+import { useAuthApple } from '@/hooks/useAuthApple';
+import { useAuthGoogle } from '@/hooks/useAuthGoogle';
+import { useAuth } from '@/hooks/useAuth';
+import appleAuth from '@invertase/react-native-apple-authentication';
+
+/* services */
+
+/* components */
+import IconSvg from '@/components/Icon';
+import {
+    AppleSvg,
+    GoogleAndroidFallbackSvg,
+    GoogleSvg,
+} from '@/components/svg/SvgSocialIcons';
 import { ScreenHeading } from '@/components/Headings';
 
+/* Styled RNs */
 const SafeAreaView = styled(ReactNativeSafeAreaView);
+
+const GoogleIconSvg =
+    Platform.OS === 'android' ? GoogleAndroidFallbackSvg : GoogleSvg;
+
 const LoginScreen = () => {
     const heading: ScreenHeadingProps = {
         ...APP_HEADING_MAIN,
     } as ScreenHeadingProps;
 
+    const blur: number = 10;
     const { user, isLoading: isAuthLoading } = useAuth();
+
     const {
         signInWithGoogle,
         isLoading: isGoogleAuthLoading,
@@ -54,12 +65,6 @@ const LoginScreen = () => {
             router.replace('/(tabs)');
         }
     }, [user]);
-
-    const imageIndex: number = generateRandomMathNumber(
-        0,
-        BACKGROUND_IMAGES.length - 1,
-    );
-    const blur: number = 10;
 
     return (
         <ImageBackground
@@ -103,8 +108,8 @@ const LoginScreen = () => {
                             className="flex-row items-center justify-center gap-3 border border-indigo-400 rounded-xl py-3 bg-white">
                             <IconSvg
                                 className="items-center justify-center size-8"
-                                iconClassName="size-8"
-                                Icon={GoogleSvg}
+                                iconClassName="size-8 text-rose-600"
+                                Icon={GoogleIconSvg}
                             />
                             <Text className="font-googlesans-medium text-base text-slate-900">
                                 {isGoogleAuthLoading

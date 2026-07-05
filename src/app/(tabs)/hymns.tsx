@@ -1,13 +1,20 @@
+/* react, react-native, expo */
 import { useEffect, useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
+import { Link, router } from 'expo-router';
+
+/* react-native-... */
 import {
     SafeAreaView as ReactNativeSafeAreaView,
     useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { Link, router } from 'expo-router';
 
+/* nativewind */
 import { styled } from 'nativewind';
 
+/* 3rd party libs */
+
+/* constants & utilities */
 import {
     APP_HEADING_TAB,
     HYMNS_FAVOURITES_ORDER_OPTIONS,
@@ -20,21 +27,25 @@ import {
 } from '@/types/app.types';
 import { cn, generateRandomMathNumber, getSchemes } from '@/utils/utility';
 
-import { getIndexes, getOrderingIcon } from '@/services/hymns.service';
+/* custom defined hooks */
 import { useHymnsFavourites } from '@/hooks/useHymnsFavourites';
 
+/* services */
+import { getIndexes, getOrderingIcon } from '@/services/hymns.service';
+
+/* components */
 import IconSvg from '@/components/Icon';
 import {
     LinesIndexSvg,
     NumberIndexSvg,
     ViewAllSvg,
 } from '@/components/svg/SvgIcons';
-
 import { ScreenHeading, SectionHeading } from '@/components/Headings';
 import HymnOfTheWeekCard from '@/components/HymnOfTheWeekCard';
+import { FavouritesEmptyState } from '../(hymns)/favourites';
 import { HymnIndexFavouriteCard } from '@/components/HymnIndexCards';
-import { FavouritesEmptyState } from '@/app/(hymns)/hymns-favourites';
 
+/* Styled RNs */
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
 const SCHEMES_META_DATA: SchemeMetaDataInterface[] = getSchemes();
@@ -69,12 +80,13 @@ const HymnsScreen = () => {
     const hymnsIndexes: HymnIndexInterface[] = getIndexes();
 
     useEffect(() => {
+        if (hymnsIndexes.length === 0) return;
         // @Todo get from firebase in aggregated hymns of week
         setHymnOfTheWeekOrdinal(
             hymnsIndexes[generateRandomMathNumber(0, hymnsIndexes.length - 1)]
                 .ordinal,
         );
-    }, []);
+    }, [hymnsIndexes]);
 
     return (
         <SafeAreaView className="flex-1 gap-y-6 p-2 bg-white">
@@ -92,7 +104,7 @@ const HymnsScreen = () => {
                 <View className="shrink-0 flex-row gap-2">
                     <Link
                         href={{
-                            pathname: '/(hymns)/hymns-index',
+                            pathname: '/(hymns)/hymns',
                             params: { mode: 'list' },
                         }}
                         asChild>
@@ -105,7 +117,7 @@ const HymnsScreen = () => {
                                 iconClassName="size-8 text-slate-800"
                                 Icon={LinesIndexSvg}
                             />
-                            <Text className="font-googlesans-medium text-base leading-1.3 text-sky-900 line-clamp-1">
+                            <Text className="font-googlesans-medium text-xl leading-1.3 text-sky-900 line-clamp-1">
                                 First Line Index
                             </Text>
                         </View>
@@ -113,7 +125,7 @@ const HymnsScreen = () => {
 
                     <Link
                         href={{
-                            pathname: '/(hymns)/hymns-index',
+                            pathname: '/(hymns)/hymns',
                             params: { mode: 'grid' },
                         }}
                         asChild>
@@ -126,7 +138,7 @@ const HymnsScreen = () => {
                                 iconClassName="size-6 text-slate-800"
                                 Icon={NumberIndexSvg}
                             />
-                            <Text className="font-googlesans-medium text-base leading-1.3 text-fuchsia-900 line-clamp-1">
+                            <Text className="font-googlesans-medium text-xl leading-1.3 text-fuchsia-900 line-clamp-1">
                                 Number Index
                             </Text>
                         </View>
@@ -146,7 +158,7 @@ const HymnsScreen = () => {
                             <View className="shrink-0 flex-row items-center gap-x-8 px-1">
                                 <Pressable
                                     onPress={() =>
-                                        router.push('/(hymns)/hymns-favourites')
+                                        router.push('/(hymns)/favourites')
                                     }
                                     className="shrink-0 flex-row items-center justify-center">
                                     <IconSvg

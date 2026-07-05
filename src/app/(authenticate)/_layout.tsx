@@ -1,13 +1,13 @@
 import { Stack } from 'expo-router';
 
 export const unstable_settings = {
-    initialRouteName: 'canticles',
+    initialRouteName: 'authenticate',
 };
 
 export default function RootLayout() {
     return (
         <Stack
-            initialRouteName="canticles"
+            initialRouteName="authenticate"
             screenOptions={{ headerShown: false }}
         />
     );

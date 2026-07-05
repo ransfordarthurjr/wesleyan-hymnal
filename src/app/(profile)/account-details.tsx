@@ -51,12 +51,12 @@ import { ScreenHeading } from '@/components/Headings';
 /* Styled RNs */
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
-const LanguageScreen = () => {
+const AccountDetailsScreen = () => {
     return (
         <View>
-            <Text>LanguageScreen</Text>
+            <Text>AccountDetailsScreen</Text>
         </View>
     );
 };
 
-export default LanguageScreen;
+export default AccountDetailsScreen;

@@ -1,13 +1,26 @@
+/* react, react-native, expo */
 import { View } from 'react-native';
+
+/* react-native-... */
 import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
 
+/* nativewind */
 import { styled } from 'nativewind';
 
+/* 3rd party libs */
+
+/* constants & utilities */
 import { APP_HEADING_TAB } from '@/constants/app.constants';
 import { ScreenHeadingProps } from '@/types/app.types';
 
+/* custom defined hooks */
+
+/* services */
+
+/* components */
 import { ScreenHeading } from '@/components/Headings';
 
+/* Styled RNs */
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
 const CanticlesScreen = () => {

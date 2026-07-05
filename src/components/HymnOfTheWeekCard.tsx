@@ -26,12 +26,12 @@ const HymnOfTheWeekCard = ({
             }}
             asChild>
             <View className="gap-y-3 rounded-md p-4 bg-orange-200">
-                <View className="flex-row items-end gap-x-2 ">
-                    <Text className="font-googlesans-regular">
+                <View className="flex-row items-center gap-x-2 ">
+                    <Text className="font-googlesans-regular text-lg">
                         Hymn of the Week:
                     </Text>
 
-                    <Text className="font-googlesans-medium">
+                    <Text className="font-googlesans-medium text-lg">
                         {hymn?.ordinal}
                     </Text>
                 </View>
@@ -42,7 +42,7 @@ const HymnOfTheWeekCard = ({
                         iconClassName="size-8 text-orange-900"
                         Icon={HymnSvg}
                     />
-                    <Text className="flex-1 font-googlesans-medium text-xl text-orange-900 line-clamp-1">
+                    <Text className="flex-1 font-googlesans-medium text-xl text-orange-900 line-clamp-1 text-ellipsis">
                         {hymn?.preview}
                     </Text>
                     <IconSvg

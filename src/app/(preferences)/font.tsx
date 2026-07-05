@@ -1,13 +1,13 @@
 /* react, react-native, expo */
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { router } from 'expo-router';
+
+/* react-native-... */
 import {
     SafeAreaView as ReactNativeSafeAreaView,
     useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-
-import { router } from 'expo-router';
-import { TextInput as ReactNativeTextInput } from 'react-native';
 
 /* nativewind */
 import { styled } from 'nativewind';
@@ -16,16 +16,16 @@ import { styled } from 'nativewind';
 
 /* constants & utilities */
 import {
-    APP_HEADING_SUB,
-    PREFERENCES_FONT_FACE_OPTIONS,
-    PREFERENCES_FONT_SIZE_OPTIONS,
-} from '@/constants/app.constants';
-import {
     FontFaceOptionInterface,
     FontSizeOptionInterface,
     IconComponent,
     ScreenHeadingProps,
 } from '@/types/app.types';
+import {
+    APP_HEADING_SUB,
+    PREFERENCES_FONT_FACE_OPTIONS,
+    PREFERENCES_FONT_SIZE_OPTIONS,
+} from '@/constants/app.constants';
 import { cn } from '@/utils/utility';
 
 /* services */
@@ -40,14 +40,11 @@ import {
 import IconSvg from '@/components/Icon';
 import {
     ArrowBackSvg,
-    CheckDoubleSvg,
     CheckSvg,
-    FontSizeSvg,
     SizeLSvg,
     SizeMSvg,
     SizeSSvg,
     SizeXLSvg,
-    SizeXSSvg,
     SizeXXLSvg,
 } from '@/components/svg/SvgIcons';
 import { ScreenHeading, SectionHeading } from '@/components/Headings';
@@ -127,7 +124,7 @@ const FontPreferenceScreen = () => {
                 <View className="">
                     <SectionHeading title="Font Size" />
 
-                    <View className="flex-row items-center gap-x-0.5 border border-slate-200 rounded-2xl p-0.5 w-full bg-slate-50">
+                    <View className="flex-row items-center gap-x-0.5 border border-slate-200 rounded-2xl py-0.5 px-1 w-full bg-slate-50">
                         {FONT_SIZE_OPTIONS.map((option, index) => (
                             <Pressable
                                 key={index}
@@ -194,13 +191,13 @@ const FontPreferenceScreen = () => {
 
                 {/* preview */}
                 <View className="gap-y-0.5">
-                    <View className="rounded-md rounded-t-2xl p-4 bg-slate-200">
+                    <View className="border border-indigo-200 rounded-md rounded-t-2xl p-4 bg-slate-200 text-indigo-950">
                         <SectionHeading title="Preview" />
                     </View>
-                    <View className="gap-y-2 rounded-md rounded-b-2xl p-4 bg-slate-200">
+                    <View className="gap-y-2 border border-indigo-200 rounded-md rounded-b-2xl p-4 bg-slate-200">
                         <Text
                             className={cn(
-                                'text-slate-950 line-clamp-4 mt-2',
+                                'text-indigo-950 line-clamp-4 mt-2',
                                 fontFace,
                                 fontSize,
                             )}>
@@ -213,7 +210,7 @@ const FontPreferenceScreen = () => {
                         </Text>
 
                         <View className="flex-row justify-end">
-                            <Text className="text-base text-slate-950">
+                            <Text className="text-base text-indigo-950">
                                 Mat. 28: 19 - 20
                             </Text>
                         </View>

@@ -13,10 +13,12 @@ import { TabItemInterface } from '@/types/app.types';
 import { TabIconSvg } from '@/components/Icon';
 
 const TabItems: TabItemInterface[] = [
-    { name: 'index', title: 'Home', Icon: HomeSvg },
-    { name: 'notifications', title: 'Notifications', Icon: NotificationsSvg },
     { name: 'hymns', title: 'Hymns', Icon: HymnsSvg },
     { name: 'canticles', title: 'Canticles', Icon: CanticlesSvg },
+
+    { name: 'index', title: 'Home', Icon: HomeSvg },
+
+    { name: 'notifications', title: 'Notifications', Icon: NotificationsSvg },
     { name: 'preferences', title: 'Preferences', Icon: PreferencesSvg },
 ];
 
@@ -25,7 +27,7 @@ export default function TabsLayout() {
 
     return (
         <Tabs
-            initialRouteName="hymns"
+            initialRouteName="index"
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,

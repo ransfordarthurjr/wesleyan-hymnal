@@ -99,6 +99,11 @@
             ],
             "@react-native-firebase/app",
             "@react-native-firebase/auth",
+            "@react-native-google-signin/google-signin",
+            "expo-font",
+            "expo-image",
+            "expo-status-bar",
+            "expo-web-browser",
             [
                 "expo-build-properties",
                 {
@@ -118,9 +123,7 @@
                         ]
                     }
                 }
-            ],
-            "expo-font",
-            "@react-native-google-signin/google-signin"
+            ]
         ],
         "experiments": {
             "typedRoutes": true,

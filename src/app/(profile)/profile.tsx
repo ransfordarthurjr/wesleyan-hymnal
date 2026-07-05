@@ -1,15 +1,30 @@
-import { useEffect } from 'react';
-import { View, Text, Pressable } from 'react-native';
-import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
+/* react, react-native, expo */
+import { useState } from 'react';
+import { Alert, Pressable, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Image } from 'expo-image';
 
-import { APP_HEADING_SUB, APP_HEADING_TAB } from '@/constants/app.constants';
-import { ScreenHeadingProps } from '@/types/app.types';
+/* react-native-... */
+import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
+
+/* nativewind */
 import { styled } from 'nativewind';
 
-import { useAuth } from '@/hooks/useAuth';
+/* 3rd party libs */
 
+/* constants & utilities */
+import { ScreenHeadingProps } from '@/types/app.types';
+import { APP_HEADING_SUB, APP_NAME } from '@/constants/app.constants';
+import { cn } from '@/utils/utility';
+
+/* custom defined hooks */
+import { useAuth } from '@/hooks/useAuth';
+import { useAuthSignOut } from '@/hooks/useAuthSignOut';
+
+/* services */
+import { unInit } from '@/services/hymns.service';
+
+/* components */
 import IconSvg from '@/components/Icon';
 import {
     ArrowBackSvg,
@@ -22,11 +37,11 @@ import {
     StarSvg,
     UserSvg,
 } from '@/components/svg/SvgIcons';
-import { useAuthSignOut } from '@/hooks/useAuthSignOut';
 import { PreferencesSvg } from '@/components/svg/SvgTabIcons';
-import { ScreenHeading } from '@/components/Headings';
 import { ListCard } from '@/components/ListCards';
+import { ScreenHeading } from '@/components/Headings';
 
+/* Styled RNs */
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
 const ProfileScreen = () => {
@@ -37,19 +52,43 @@ const ProfileScreen = () => {
 
     const { user, isLoading: isUserLoading } = useAuth();
     const { signOut, loading: isSignOutLoading } = useAuthSignOut();
-
-    useEffect(() => {
-        if (!isUserLoading && !user) {
-            router.replace('/(auth)/login');
-        }
-    }, [user]);
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
     const handleSignOut = async () => {
         await signOut();
-        router.replace('/(auth)/login');
+        router.replace('/(authenticate)/authenticate');
     };
 
-    if (isUserLoading || !user) return null;
+    const handleDeleteAccount = () => {
+        Alert.alert(
+            'Delete Account & Preferences',
+            `Are you sure you want to remove all your data and settings from ${APP_NAME}`,
+            [
+                {
+                    text: 'Delete',
+                    style: 'destructive',
+                    onPress: async () => {
+                        setIsDeleting(true);
+                        await deleteAccount();
+                        setIsDeleting(false);
+                    },
+                },
+                { text: 'Cancel', style: 'cancel' },
+            ],
+        );
+    };
+
+    const deleteAccount = async () => {
+        try {
+            await signOut();
+            await unInit();
+            router.replace('/(startup)/startup');
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    // if (isUserLoading || !user) return null;
 
     const profileUrl: string | null = user?.photoURL ?? null;
 
@@ -85,7 +124,7 @@ const ProfileScreen = () => {
                         className="shrink-0 flex-row items-center justify-center">
                         {isSignOutLoading ? (
                             <IconSvg
-                                className="rounded-full items-center justify-center size-6 animate-spin"
+                                className="rounded-full items-center justify-center size-7 animate-spin"
                                 iconClassName="size-7 text-fuchsia-800"
                                 Icon={ProcessingSvg}
                             />
@@ -145,7 +184,7 @@ const ProfileScreen = () => {
                         label="Account Details"
                         mode={{
                             mode: 'link',
-                            link: { pathname: '/(auth)/account-details' },
+                            link: { pathname: '/(profile)/account-details' },
                         }}
                         Icon={UserSvg}
                         first={true}
@@ -203,11 +242,11 @@ const ProfileScreen = () => {
                     <View className="flex-row items-center rounded-md gap-x-4 px-5 py-3.5 bg-indigo-950">
                         <IconSvg
                             className="flex items-center justify-center rounded-full size-11 bg-teal-300"
-                            iconClassName="size-6 text-teal-800"
+                            iconClassName="size-5 text-teal-800"
                             Icon={EditSvg}
                         />
                         <Text className="font-googlesans-medium text-lg text-white">
-                            Suggest An Edit
+                            Suggest an edit...
                         </Text>
                     </View>
                     <View className="flex-row items-center rounded-md rounded-b-2xl gap-x-4 px-5 py-3.5 bg-indigo-950">
@@ -225,16 +264,21 @@ const ProfileScreen = () => {
 
             <View className="flex-1 justify-end gap-y-6 px-2">
                 <View className="gap-y-0.5">
-                    <View className="flex-row items-center justify-center border border-rose-200 rounded-2xl gap-x-4 px-5 py-2.5 bg-rose-100">
+                    <Pressable
+                        onPress={handleDeleteAccount}
+                        className="flex-row items-center justify-center border border-rose-400 rounded-2xl gap-x-4 px-5 py-2 bg-rose-300">
                         <Text className="font-googlesans-medium text-lg text-rose-800">
                             Delete Account
                         </Text>
                         <IconSvg
-                            className="flex items-center justify-center rounded-full size-11"
+                            className={cn(
+                                'flex items-center justify-center rounded-full size-11',
+                                isDeleting && 'animate-spin',
+                            )}
                             iconClassName="size-9 text-rose-800"
-                            Icon={DeleteSvg}
+                            Icon={isDeleting ? ProcessingSvg : DeleteSvg}
                         />
-                    </View>
+                    </Pressable>
                 </View>
             </View>
         </SafeAreaView>

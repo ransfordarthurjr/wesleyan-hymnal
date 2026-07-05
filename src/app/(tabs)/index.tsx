@@ -1,25 +1,35 @@
-import { View, Text, Pressable } from 'react-native';
-import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
-import { Image } from 'expo-image';
+/* react, react-native, expo */
+import { Pressable, Text, View } from 'react-native';
 import { router } from 'expo-router';
+import { Image } from 'expo-image';
 
+/* react-native-... */
+import { SafeAreaView as ReactNativeSafeAreaView } from 'react-native-safe-area-context';
+
+/* nativewind */
 import { styled } from 'nativewind';
 
+/* 3rd party libs */
+
+/* constants & utilities */
+import { APP_HEADING_MAIN } from '@/constants/app.constants';
+import { ScreenHeadingProps } from '@/types/app.types';
+import { cn } from '@/utils/utility';
+
+/* custom defined hooks */
 import { useAuth } from '@/hooks/useAuth';
 import { useDailyTimestamp } from '@/hooks/useDailyTimestamp';
 
-import { APP_HEADING_MAIN } from '@/constants/app.constants';
-import { cn } from '@/utils/utility';
-import { ScreenHeadingProps } from '@/types/app.types';
+/* services */
 
+/* components */
 import IconSvg from '@/components/Icon';
 import { UserSvg } from '@/components/svg/SvgIcons';
-
+import { ScreenHeading } from '@/components/Headings';
 import VerseOfTheDayCard from '@/components/VerseOfTheDayCard';
 import AboutAuthorPreviewCard from '@/components/AboutAuthorPreviewCard';
 
-import { ScreenHeading } from '@/components/Headings';
-
+/* Styled RNs */
 const SafeAreaView = styled(ReactNativeSafeAreaView);
 
 const IndexScreen = () => {
@@ -32,7 +42,9 @@ const IndexScreen = () => {
 
     const firstname: string = user?.displayName?.split(' ')[0] ?? '';
     const profileUrl: string | null = user?.photoURL ?? null;
-    const profileRedirectPath = !!user ? '/(auth)/profile' : '/(auth)/login';
+    const profileRedirectPath = !!user
+        ? '/(profile)/profile'
+        : '/(authenticate)/authenticate';
 
     return (
         <SafeAreaView className="flex-1 gap-y-6 p-2 bg-white">
@@ -52,12 +64,12 @@ const IndexScreen = () => {
             </View>
 
             <View className="flex-1 gap-y-4">
-                <View className="flex-row items-end justify-between">
-                    <Text className="font-googlesans-medium text-xl text-slate-800">
+                <View className="flex-row items-end gap-x-2">
+                    <Text className="flex-1 font-googlesans-medium text-xl text-slate-800 line-clamp-1 text-ellipsis">
                         {greeting} {firstname}
                     </Text>
 
-                    <View className="flex-row items-center justify-center size-15">
+                    <View className="shrink-0 flex-row items-center justify-center size-15">
                         <Pressable
                             onPress={() => router.push(profileRedirectPath)}
                             className={cn(
